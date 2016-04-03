@@ -1,23 +1,18 @@
 #include <Http/Server.hpp>
 
 namespace Http {
-    Server::Server( unsigned int port, std::string host, Routing::Router& router ) {
-        this->port_   = port;
-        this->router_ = router;
-    }
-
 
     Server::Server( unsigned int port, std::string host ) {
         this->port_   = port;
     }
 
-    int Server::run() {
+    int Server::run( Routing::Router& router, Routing::ControllerErrorAction onError ) {
         tcp::acceptor acceptor( this->io_service_, tcp::endpoint(tcp::v4(), this->port_) );
 
         while( 1 ) {
             tcp::iostream* stream = new tcp::iostream();
             acceptor.accept( *stream->rdbuf() );
-            std::thread (Server::threadHandler, stream, this->router_ ).detach();
+            std::thread (Server::threadHandler, stream, router, onError ).detach();
         }
         return 0;
     }
@@ -34,14 +29,10 @@ namespace Http {
 
                 try { 
                     Http::Request  request( *stream );
-                    Http::Response response( Http::HTTP1_1, {
-                        { "Content-type", "application/json" }
-                    }, *stream );
+                    Http::Response response( Http::HTTP1_1, {}, *stream );
                     onAccept( request, response );
                 } catch( ... ) {
-                    Http::Response response( Http::HTTP1_1, {
-                        { "Content-type", "application/json" }
-                    }, *stream );
+                    Http::Response response( Http::HTTP1_1, {}, *stream );
                     onError( response, std::current_exception() );
                 }
 
@@ -50,17 +41,15 @@ namespace Http {
         }
     }
 
-    void Server::threadHandler( tcp::iostream* stream, Routing::Router router ) {
+    void Server::threadHandler( tcp::iostream* stream, Routing::Router router, Routing::ControllerErrorAction onError ) {
         try {
             Http::Request  request( *stream );
-            Http::Response response( Http::HTTP1_1, {
-                { "Content-type", "application/json" }
-            }, *stream );
+            Http::Response response( Http::HTTP1_1, {}, *stream );
+
             router.handleRequest( request, response );
         } catch( ... ) {
             Http::Response response( Http::HTTP1_1, {}, *stream );
-            *stream << "Error";
-            response.send( Http::INTERNAL_SERVER_ERROR );
+            onError( response, std::current_exception() );
         }
         delete stream;
     }

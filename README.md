@@ -39,8 +39,13 @@ Routing::Router router({
     })
 });
 
-Http::Server server( 8080, "0.0.0.0", router );
-server.run();
+Http::Server server( 8080, "0.0.0.0" );
+server.run(
+    router,
+    []( Http::Response response, std::exception_ptr exception ) -> void {
+        response << "error"; 
+    }
+);
 ```
 
 Alternativley a Simple file server could be implemented as follows:

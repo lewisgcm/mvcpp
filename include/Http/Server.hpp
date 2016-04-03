@@ -17,17 +17,15 @@ namespace Http {
 
         unsigned int port_;
         boost::asio::io_service io_service_;
-        Routing::Router router_;
 
     public:
 
-        Server( unsigned int port, std::string host, Routing::Router& router );
         Server( unsigned int port, std::string host );
 
-        int run();
+        int run( Routing::Router& router, Routing::ControllerErrorAction onError );
         int run( Routing::ControllerAction onAccept, Routing::ControllerErrorAction onError );
 
     private:
-        static void threadHandler( tcp::iostream* stream, Routing::Router router );
+        static void threadHandler( tcp::iostream* stream, Routing::Router router, Routing::ControllerErrorAction onError );
     };
 }
