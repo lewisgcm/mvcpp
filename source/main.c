@@ -24,13 +24,17 @@ int main() {
             Routing::Route( Http::GET,  "/", []( Http::Request& request, Http::Response& response ) -> void {
                 response << "Hello World";
             }),
-            Routing::Route( Http::GET,  "/api/test", []( Http::Request& request, Http::Response& response ) -> void {
-                response << "Testing!!!";
+            Routing::Route( Http::GET,  "/api/test/{id}", []( Http::Request& request, Http::Response& response ) -> void {
+                response << "Testing!!!: IO:" << request.getQuery().getParam<int>( "id" ) << "\n";
             })
         });
 
         Http::Server server( 8080, "0.0.0.0", router );
-        server.run();
+        server.run( []( Http::Request request, Http::Response response ) -> void {
+            response << "<h1>Hello World</h1>";
+        }, []( Http::Response response, std::exception_ptr exception ) -> void {
+            response << "A bad error!";
+        });
 
     } catch( std::regex_error& e ) {
         cout << "ERROR CODE: " << e.code() << ", What:" << e.what() << "\n";

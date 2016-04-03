@@ -5,6 +5,8 @@
 
 #include <vector>
 #include <regex>
+#include <exception>
+#include <stdexcept>
 #include <functional>
 #include <Log/Log.hpp>
 #include <Http/Http.hpp>
@@ -21,6 +23,7 @@ namespace Routing {
     */
     //typedef void (*ControllerAction)( Http::Request& request, Http::Response& response );
     typedef std::function< void( Http::Request& request, Http::Response& response )> ControllerAction;
+    typedef std::function< void( Http::Response& response, std::exception_ptr exception )> ControllerErrorAction;
 
     /**
      * Route.

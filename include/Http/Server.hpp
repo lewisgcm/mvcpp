@@ -20,8 +20,13 @@ namespace Http {
         Routing::Router router_;
 
     public:
+
         Server( unsigned int port, std::string host, Routing::Router& router );
+        Server( unsigned int port, std::string host );
+
         int run();
+        int run( Routing::ControllerAction onAccept, Routing::ControllerErrorAction onError );
+
     private:
         static void threadHandler( tcp::iostream* stream, Routing::Router router );
     };
