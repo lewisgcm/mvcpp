@@ -29,10 +29,10 @@ namespace Http {
 
                 try { 
                     Http::Request  request( *stream );
-                    Http::Response response( Http::HTTP1_1, {}, *stream );
+                    Http::Response response( Http::HTTP1_1, { { "Server", "MVC++ Server" } }, *stream );
                     onAccept( request, response );
                 } catch( ... ) {
-                    Http::Response response( Http::HTTP1_1, {}, *stream );
+                    Http::Response response( Http::HTTP1_1, { { "Server", "MVC++ Server" } }, *stream );
                     onError( response, std::current_exception() );
                 }
 
@@ -44,11 +44,13 @@ namespace Http {
     void Server::threadHandler( tcp::iostream* stream, Routing::Router router, Routing::ControllerErrorAction onError ) {
         try {
             Http::Request  request( *stream );
-            Http::Response response( Http::HTTP1_1, {}, *stream );
+            Http::Response response( Http::HTTP1_1, {
+                { "Server", "MVC++ Server" }
+            }, *stream );
 
             router.handleRequest( request, response );
         } catch( ... ) {
-            Http::Response response( Http::HTTP1_1, {}, *stream );
+            Http::Response response( Http::HTTP1_1, { { "Server", "MVC++ Server" } }, *stream );
             onError( response, std::current_exception() );
         }
         delete stream;

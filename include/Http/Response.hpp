@@ -26,7 +26,15 @@ namespace Http {
 
         HttpVersion version_;
         HttpHeaders headers_;
+        HttpStatus status_;
+        bool sent_;
         ostream& out_;
+
+        /**
+         * send.
+         * Send will send the headers to the client.
+        */
+        void send();
 
     public:
 
@@ -40,11 +48,11 @@ namespace Http {
         Response( HttpVersion version, HttpHeaders headers, ostream& out ) noexcept;
 
         /**
-         * send.
-         * Send will send the headers to the client.
-         * @param[in] code Status code to send in the reply
+         * setStatusCode
+         * Set the status code for this response.
+         * @param[in] status Status code of the response
         */
-        void send( HttpStatus code );
+        void setStatusCode( HttpStatus status );
 
         /**
          * Operator<<.
@@ -57,7 +65,7 @@ namespace Http {
         */
         template<typename T>
         ostream& operator<<(T in) {
-            send( Http::OK );
+            send();
             return out_ << in;
         }
     };

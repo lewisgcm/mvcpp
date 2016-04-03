@@ -20,10 +20,6 @@ compile: $(OBJECTS)
 build: compile
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -Wl,-soname,lib$(BUILD_NAME).so -o lib$(BUILD_NAME).so
 
-.PHONY: examples
-examples:
-	$(CXX) $(CXXFLAGS) -L`pwd`/ -lboost_system -l$(BUILD_NAME) $(EXAMPLE_DIR)/file-server.cpp -o examples/file-server
-
 run:
 	@export LD_LIBRARY_PATH=`pwd`/; ./examples/file-server
 
@@ -31,7 +27,7 @@ install: build
 	cp lib$(BUILD_NAME).so /usr/lib
 
 test: build $(TESTS_O)
-	@$(CXX) $(CXXFLAGS) $(TESTS_O) -L`pwd`/ -lboost_system -l$(BUILD_NAME) -o testRunner -I $(TEST_DIR) $(TEST_DIR)/test.c
+	@$(CXX) $(CXXFLAGS) $(TESTS_O) -L`pwd`/ -l$(BUILD_NAME) -o testRunner -I $(TEST_DIR) $(TEST_DIR)/test.c
 	@export LD_LIBRARY_PATH=`pwd`/; ./testRunner; rm testRunner
 
 docs:

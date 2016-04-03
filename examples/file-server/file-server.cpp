@@ -20,11 +20,14 @@
 int main() {
     try {
         Http::Server server( 8080, "0.0.0.0" );
-        server.run( []( Http::Request request, Http::Response response ) -> void {
-            response << "<h1>Hello World</h1>";
-        }, []( Http::Response response, std::exception_ptr exception ) -> void {
-            response << "A bad error!";
-        });
+        server.run(
+            []( Http::Request request, Http::Response response ) -> void {
+                response << "<h1>Hello World</h1>";
+            },
+            []( Http::Response response, std::exception_ptr exception ) -> void {
+                response << "A bad error!";
+            }
+        );
     } catch( std::regex_error& e ) {
         cout << "ERROR CODE: " << e.code() << ", What:" << e.what() << "\n";
     }

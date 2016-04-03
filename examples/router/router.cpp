@@ -32,6 +32,7 @@ int main() {
         server.run(
             router,
             []( Http::Response response, std::exception_ptr exception ) -> void {
+                response.setStatusCode( Http::INTERNAL_SERVER_ERROR );
                 response << "A bad error!";
             }
         );

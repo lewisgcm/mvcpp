@@ -9,15 +9,22 @@ namespace Http {
     : out_( out ) {
         version_ = version;
         headers_ = headers;
+        status_  = Http::OK;
+        sent_    = false;
     }
 
-    void Response::send( HttpStatus code ) {
-        if( out_.tellp() == 0 ) {
-            cout << Http::HttpVersionString.at( version_ ) << " " << Http::HttpResponseStrings.at( code ) << "\r\n";
+    void Response::setStatusCode( HttpStatus status ) {
+        status_ = status;
+    }
+
+    void Response::send() {
+        if( !sent_ ) {
+            out_ << Http::HttpVersionString.at( version_ ) << " " << status_ << " " << Http::HttpResponseStrings.at( status_ ) << "\r\n";
             for( auto& header : headers_ ) {
-                cout << header.first << ": " << header.second << "\r\n";
+                out_ << header.first << ": " << header.second << "\r\n";
             }
-            cout << "\n\r";
+            out_ << "\r\n";
+            sent_ = true;
         }
     }
 }
