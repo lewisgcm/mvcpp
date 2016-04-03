@@ -1,4 +1,5 @@
 # mvc++
+[![Build Status](https://travis-ci.org/lewisgcm/mvcpp.svg?branch=master)](https://travis-ci.org/lewisgcm/mvcpp)
 C++ framework for HTTP based network applications with addtional MVC helpers and routing.
 This library is designed to be easy to use, fast and extensible.
 Various benchmarks have been included in the `benchmarking/*` directory.
