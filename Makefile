@@ -50,4 +50,5 @@ clean:
 	@rm -rf $(BUILD_DIR)
 	@rm -f $(TESTS_O)
 	@rm -rf $(DOCS_DIR)/build
-	@rm -f $(BUILD_NAME)
+	@rm -f lib$(BUILD_NAME).so
+	@rm -r test_*
