@@ -1,9 +1,11 @@
-# MVC++ - Fast C++ HTTP Networking Framework
+# MVC++
+## Fast C++ HTTP MVC Networking Library
 [![Build Status](https://travis-ci.org/lewisgcm/mvcpp.svg?branch=master)](https://travis-ci.org/lewisgcm/mvcpp)
 
-C++ framework for HTTP based network applications with addtional MVC helpers and routing.
+C++ library for HTTP based network applications with addtional MVC helpers and routing.
 This library is designed to be easy to use, fast and extensible.
 Various benchmarks have been included in the `benchmarking/*` directory.
+Additional examples can be viewed in the 
 
 ## Getting Started
 Building and using MVC++ required Linux, g++-4.9 and Make.
@@ -19,10 +21,14 @@ To build the project use `make` in the root directory as follows:
 make test #Compile and run tests
 make clean #Clean binary files
 make build #Build project
+make install #Build and install shared library
+make examples #Compile examples
+make run #Run example
 ```
 
 Basic usage:
 ```C++
+using namespace MVC++;
 Routing::Router router({
     Routing::Route( Http::GET,  "/", []( Http::Request& request, Http::Response& response ) -> void {
         response << "Hello World";

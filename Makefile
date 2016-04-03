@@ -20,7 +20,8 @@ compile: $(OBJECTS)
 build: compile
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -Wl,-soname,lib$(BUILD_NAME).so -o lib$(BUILD_NAME).so
 
-examples: build
+.PHONY: examples
+examples:
 	$(CXX) $(CXXFLAGS) -L`pwd`/ -lboost_system -l$(BUILD_NAME) $(EXAMPLE_DIR)/file-server.cpp -o examples/file-server
 
 run:
