@@ -4,7 +4,7 @@ TEST_DIR   = test
 DOCS_DIR   = documentation
 INCLUDES   = -I include
 LINKFLAGS  = -Wl,--no-as-needed -lcppunit -lboost_system -lpthread
-BUILD_NAME = main
+BUILD_NAME = libmvcpp
 
 CXX = g++-4.9
 CXXFLAGS = -Werror -std=c++11 $(INCLUDES) $(LINKFLAGS) -O3
@@ -17,7 +17,9 @@ TESTS_O  = $(TESTS_S:%.cpp=%.o)
 compile: $(OBJECTS)
 
 build: compile
-	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(BUILD_NAME) $(SOURCE_DIR)/$(BUILD_NAME).c
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -Wl,-soname,$(BUILD_NAME).so.1 -o $(BUILD_NAME).so.1.0
+
+examples: build
 
 test: compile $(TESTS_O)
 	@$(CXX) $(CXXFLAGS) $(TESTS_O) $(OBJECTS) -o testRunner -I $(TEST_DIR) $(TEST_DIR)/test.c
@@ -30,7 +32,7 @@ docs:
 
 $(BUILD_DIR)%.o: $(SOURCE_DIR)/%.cpp
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -fPIC -c -o $@ $<
 
 $(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
 	@mkdir -p $(@D)
