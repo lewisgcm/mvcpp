@@ -33,7 +33,6 @@ class RequestTest : public CppUnit::TestFixture {
     CPPUNIT_TEST(testValidHTTPVersion);
     CPPUNIT_TEST(testMaxRequestLength);
     CPPUNIT_TEST(testValidHeaders);
-    CPPUNIT_TEST(testHeadersAndBody);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -47,5 +46,4 @@ protected:
     void testValidHTTPVersion();
     void testMaxRequestLength();
     void testValidHeaders();
-    void testHeadersAndBody();
 };

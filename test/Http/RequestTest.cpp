@@ -74,23 +74,3 @@ void RequestTest::testValidHeaders() {
     CPPUNIT_ASSERT_EQUAL_MESSAGE( "Header2", true, "test2" == headers["Header2"] );
     CPPUNIT_ASSERT_EQUAL_MESSAGE( "Header3", true, "" == headers["Header3"] );
 }
-
-void RequestTest::testHeadersAndBody() {
-    std::istringstream iss(
-        "PUT / HTTP/1.1\r\n"
-        "Header: test\r\n"
-        "Header1:test1\r\n"
-        "  Header2  :  test2  \r\n"
-        "  Header3  \r\n"
-        "\r\n"
-        "SOME_DATA"
-    );
-    Http::Request request(iss);
-    Http::HttpHeaders headers = request.getHeaders();
-    CPPUNIT_ASSERT_EQUAL_MESSAGE( "Method",  true, Http::PUT == request.getMethod() );
-    CPPUNIT_ASSERT_EQUAL_MESSAGE( "Header",  true, "test" == headers["Header"] );
-    CPPUNIT_ASSERT_EQUAL_MESSAGE( "Header1", true, "test1" == headers["Header1"] );
-    CPPUNIT_ASSERT_EQUAL_MESSAGE( "Header2", true, "test2" == headers["Header2"] );
-    CPPUNIT_ASSERT_EQUAL_MESSAGE( "Header3", true, "" == headers["Header3"] );
-    CPPUNIT_ASSERT_EQUAL_MESSAGE( "Body",    true, "SOME_DATA" == request.getBody() );
-}
