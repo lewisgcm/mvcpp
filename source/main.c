@@ -15,7 +15,6 @@
 #include <Http/Response.hpp>
 #include <Http/Request.hpp>
 #include <Routing/Router.hpp>
-#include <Controller/SimpleController.hpp>
 #include <Http/Server.hpp>
 
 int main() {

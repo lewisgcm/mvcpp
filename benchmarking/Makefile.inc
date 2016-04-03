@@ -7,7 +7,7 @@ LINKFLAGS  = -Wl,--no-as-needed -lcppunit -ldl
 SOURCES_D  = $(foreach x, $(basename $(SOURCES)), $(../../)$(x).cpp)
 OBJECTS    = $(foreach x, $(basename $(SOURCES_D)), $(BUILD_DIR)$(x).o)
 
-CXX = g++
+CXX = g++-4.9
 CXXFLAGS = -Werror -std=gnu++11 $(INCLUDES) $(LINKFLAGS) -O3
 
 build: $(OBJECTS)

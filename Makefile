@@ -3,7 +3,7 @@ SOURCE_DIR = source
 TEST_DIR   = test
 DOCS_DIR   = documentation
 INCLUDES   = -I include -I /usr/include/soci -I /usr/local/include/soci
-LINKFLAGS  = -Wl,--no-as-needed -lcppunit -ldl -lsoci_core -lsoci_sqlite3 -lboost_system -lpthread
+LINKFLAGS  = -Wl,--no-as-needed -lcppunit -ldl -lboost_system -lpthread
 BUILD_NAME = main
 
 CXX = g++-4.9
