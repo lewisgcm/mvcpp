@@ -3,7 +3,7 @@ SOURCE_DIR  = source
 TEST_DIR    = test
 DOCS_DIR    = documentation
 EXAMPLE_DIR = examples
-INCLUDES    = -I include
+INCLUDES    = -I include -I submodules/json/src
 LINKFLAGS   = -Wl,--no-as-needed -lcppunit -lboost_system -lpthread
 BUILD_NAME  = mvcpp
 
