@@ -1,10 +1,11 @@
-BUILD_DIR  = build/
-SOURCE_DIR = source
-TEST_DIR   = test
-DOCS_DIR   = documentation
-INCLUDES   = -I include
-LINKFLAGS  = -Wl,--no-as-needed -lcppunit -lboost_system -lpthread
-BUILD_NAME = libmvcpp
+BUILD_DIR   = build/
+SOURCE_DIR  = source
+TEST_DIR    = test
+DOCS_DIR    = documentation
+EXAMPLE_DIR = examples
+INCLUDES    = -I include
+LINKFLAGS   = -Wl,--no-as-needed -lcppunit -lboost_system -lpthread
+BUILD_NAME  = mvcpp
 
 CXX = g++-4.9
 CXXFLAGS = -Werror -std=c++11 $(INCLUDES) $(LINKFLAGS) -O3
@@ -17,14 +18,17 @@ TESTS_O  = $(TESTS_S:%.cpp=%.o)
 compile: $(OBJECTS)
 
 build: compile
-	$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -Wl,-soname,$(BUILD_NAME).so.1 -o $(BUILD_NAME).so.1.0
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -Wl,-soname,lib$(BUILD_NAME).so -o lib$(BUILD_NAME).so
 
 examples: build
+	$(CXX) $(CXXFLAGS) -L`pwd`/ -lboost_system -l$(BUILD_NAME) $(EXAMPLE_DIR)/file-server.cpp -o examples/file-server
 
-test: compile $(TESTS_O)
-	@$(CXX) $(CXXFLAGS) $(TESTS_O) $(OBJECTS) -o testRunner -I $(TEST_DIR) $(TEST_DIR)/test.c
-	@./testRunner
-	@rm -r testRunner
+run:
+	@export LD_LIBRARY_PATH=`pwd`/; ./examples/file-server
+
+test: build $(TESTS_O)
+	@$(CXX) $(CXXFLAGS) $(TESTS_O) -L`pwd`/ -lboost_system -l$(BUILD_NAME) -o testRunner -I $(TEST_DIR) $(TEST_DIR)/test.c
+	@export LD_LIBRARY_PATH=`pwd`/; ./testRunner; rm testRunner
 
 docs:
 	mkdir -p $(DOCS_DIR)/build
