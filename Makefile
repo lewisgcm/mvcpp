@@ -26,6 +26,9 @@ examples: build
 run:
 	@export LD_LIBRARY_PATH=`pwd`/; ./examples/file-server
 
+install: build
+	cp lib$(BUILD_NAME).so /usr/lib
+
 test: build $(TESTS_O)
 	@$(CXX) $(CXXFLAGS) $(TESTS_O) -L`pwd`/ -lboost_system -l$(BUILD_NAME) -o testRunner -I $(TEST_DIR) $(TEST_DIR)/test.c
 	@export LD_LIBRARY_PATH=`pwd`/; ./testRunner; rm testRunner
