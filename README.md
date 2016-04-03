@@ -43,6 +43,7 @@ Http::Server server( 8080, "0.0.0.0" );
 server.run(
     router,
     []( Http::Response response, std::exception_ptr exception ) -> void {
+        response.setStatusCode( Http::INTERNAL_SERVER_ERROR );
         response << "error"; 
     }
 );
@@ -56,6 +57,7 @@ server.run(
         response << "<h1>Hello World</h1>";
     },
     []( Http::Response response, std::exception_ptr exception ) -> void {
+        response.setStatusCode( Http::INTERNAL_SERVER_ERROR );
         response << "A bad error!";
     }
 );
@@ -71,6 +73,7 @@ server.run(
         response << static_cast<json>(user) ;
     },
     []( Http::Response response, std::exception_ptr exception ) -> void {
+        response.setStatusCode( Http::INTERNAL_SERVER_ERROR );
         response << "A bad error!";
     }
 );
