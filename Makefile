@@ -2,8 +2,8 @@ BUILD_DIR  = build/
 SOURCE_DIR = source
 TEST_DIR   = test
 DOCS_DIR   = documentation
-INCLUDES   = -I include -I /usr/include/soci -I /usr/local/include/soci
-LINKFLAGS  = -Wl,--no-as-needed -lcppunit -ldl -lboost_system -lpthread
+INCLUDES   = -I include
+LINKFLAGS  = -Wl,--no-as-needed -lcppunit -lboost_system -lpthread
 BUILD_NAME = main
 
 CXX = g++-4.9
@@ -27,9 +27,6 @@ test: compile $(TESTS_O)
 docs:
 	mkdir -p $(DOCS_DIR)/build
 	cd $(DOCS_DIR); doxygen doxygen.cfg
-
-run:
-	spawn-fcgi -p 8000 -n -F 1 test
 
 $(BUILD_DIR)%.o: $(SOURCE_DIR)/%.cpp
 	@mkdir -p $(@D)
