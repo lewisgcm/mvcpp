@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <regex>
+#include <functional>
 #include <Log/Log.hpp>
 #include <Http/Http.hpp>
 #include <Http/Response.hpp>
@@ -18,7 +19,8 @@ namespace Routing {
      * Typedef for pointing to the function of a controller.
      * This function must take two parameters by reference, the request and response.
     */
-    typedef void (*ControllerAction)( Http::Request& request, Http::Response& response );
+    //typedef void (*ControllerAction)( Http::Request& request, Http::Response& response );
+    typedef std::function< void( Http::Request& request, Http::Response& response )> ControllerAction;
 
     /**
      * Route.

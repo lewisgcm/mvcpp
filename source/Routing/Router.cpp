@@ -5,7 +5,11 @@
 
 namespace Routing {
 
-    Router::Router( vector<Route> routes ) {
+    Router::Router() {
+        
+    }
+
+    Router::Router( const vector<Route> routes ) {
         routes_ = routes;
     }
 

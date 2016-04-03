@@ -56,7 +56,7 @@ namespace Http {
         vector<string> tokens;
         boost::split( tokens, line, boost::is_any_of(" ") );
         if( tokens.size() != 3 ) {
-            Log::Warning("Request status line malformed.");
+            Log::Warning("Request status line malformed {%s}.", line.c_str() );
             return false;
         }
 
@@ -97,7 +97,10 @@ namespace Http {
         }
 
         /*Copy remainder of the stream into the body string*/
-        copy( istreambuf_iterator<char>(stream), istreambuf_iterator<char>(), back_inserter(body_) );
+        /*This should be handled correctly!!!*/
+        if( headers_.find( "Content-Length" ) != headers_.end() && headers_.find("Transfer-Encoding") != headers_.end() ) {
+            copy( istreambuf_iterator<char>(stream), istreambuf_iterator<char>(), back_inserter(body_) );
+        }
 
         return true;
     }

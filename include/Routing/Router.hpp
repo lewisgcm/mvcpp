@@ -32,6 +32,8 @@ namespace Routing {
 
     public:
 
+        Router();
+
         /**
          * Constructor.
          * This constructor takes a vector of route objects.

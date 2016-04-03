@@ -3,11 +3,11 @@ SOURCE_DIR = source
 TEST_DIR   = test
 DOCS_DIR   = documentation
 INCLUDES   = -I include -I /usr/include/soci -I /usr/local/include/soci
-LINKFLAGS  = -Wl,--no-as-needed -lcppunit -ldl -lsoci_core -lsoci_sqlite3 -luv
+LINKFLAGS  = -Wl,--no-as-needed -lcppunit -ldl -lsoci_core -lsoci_sqlite3 -lboost_system -lpthread
 BUILD_NAME = main
 
-CXX = g++
-CXXFLAGS = -Werror -std=gnu++11 $(INCLUDES) $(LINKFLAGS) -O3
+CXX = g++-4.9
+CXXFLAGS = -Werror -std=c++11 $(INCLUDES) $(LINKFLAGS) -O3
 
 SOURCES  = $(shell find $(SOURCE_DIR) -type f -name '*.cpp' | cut -sd / -f 2-)
 OBJECTS  = $(foreach x, $(basename $(SOURCES)), $(BUILD_DIR)$(x).o)
