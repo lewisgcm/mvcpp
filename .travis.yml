@@ -13,5 +13,5 @@ install:
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.9;  sudo apt-get install -qq libcppunit-dev; sudo apt-get install -qq libboost-system-dev; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9"; fi
 
-script: 
-  - make build CC=$CXX
+script:
+  - make test CC=$CXX
