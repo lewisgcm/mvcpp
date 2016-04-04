@@ -1,31 +1,32 @@
-# MVC++ - Fast C++ HTTP Networking Library
+# MVC++ Fast C++ HTTP Networking Library
 [![Build Status](https://travis-ci.org/lewisgcm/mvcpp.svg?branch=master)](https://travis-ci.org/lewisgcm/mvcpp)
 [![License Type](https://img.shields.io/badge/license-LGPL%203.0-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0.en.html)
 
-C++ library for HTTP based network applications with addtional MVC helpers and routing.
-This library is designed to be easy to use, fast and extensible.
-Various benchmarks have been included in the `benchmarking/*` directory.
-Additional examples can be viewed in the `examples/*` directory.
+C++ library for HTTP based network applications including additional MVC helpers and routing.
+This library was designed for simplicity, speed and modularity.
+Various benchmarks have been included in the `benchmarking/*` directory and 
+examples can be viewed in the `examples/*` directory.
 
 ## Getting Started
-Building and using MVC++ required Linux, g++-4.9 and Make.
-Dependecies can be installed using the following commands
+Building this project requires cmake, boost-system, cppunit and a C++11 compiler. 
+Dependencies can be installed using the following commands on a debian based Linux system:
 ```bash
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
 sudo apt-get update;
-sudo apt-get install make g++-4.9 libcppunit-dev libboost-system-dev;
+sudo apt-get install make g++-4.9 libcppunit-dev libboost-system-dev cmake;
 ```
 
-To build the project use `make` in the root directory as follows:
+## Building
+CMake is used as the build system for this project, follow the steps below to compile:
 ```bash
-make test #Compile and run tests
-make clean #Clean binary files
-make build #Build project
-make install #Build and install shared library
-make examples #Compile examples
-make run #Run example
+git clone https://github.com/lewisgcm/mvcpp
+cd mvcpp; cmake .
+make UnitTest  #Run unit tests
+make RequestBenchmark #Compile request benchmark
+make RouterExample #Compile router example
 ```
 
+## Usage
 Basic usage:
 ```C++
 Routing::Router router({

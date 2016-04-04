@@ -72,7 +72,6 @@ namespace Http {
         version_ = (HttpVersion)std::distance( HttpVersionString.begin(), it_version );
         query_   = Query(tokens[1]);
 
-
         while( !stream.eof() ) {
 
             getline( stream, line );

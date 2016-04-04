@@ -3,7 +3,7 @@
 #include <Http/Http.hpp>
 #include <Http/Request.hpp>
 
-#define ITERATIONS 10000
+#define ITERATIONS 150000
 
 int main() {
 
