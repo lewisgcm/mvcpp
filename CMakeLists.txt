@@ -19,6 +19,8 @@ file(GLOB TEST_SOURCES "test/**/*.cpp" "test/test.cpp")
 add_library(mvcpp SHARED ${SOURCES})
 target_include_directories (mvcpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
+##Unit Testing
+enable_testing()
 include_directories(test)
 add_executable ( UnitTest ${TEST_SOURCES} )
 target_link_libraries ( UnitTest LINK_PUBLIC mvcpp pthread boost_system cppunit )

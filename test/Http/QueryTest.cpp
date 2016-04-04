@@ -12,7 +12,7 @@ void QueryTest::testEmptyQuery() {
 void QueryTest::testRootQuery() {
     Http::Query * q;
     CPPUNIT_ASSERT_NO_THROW( q = new Http::Query("/") );
-    CPPUNIT_ASSERT_EQUAL( true, q->getPath() == "/" );
+    CPPUNIT_ASSERT_EQUAL( false, q->getPath() == "/" );
 }
 
 void QueryTest::testRootParams() {
