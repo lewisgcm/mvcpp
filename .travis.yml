@@ -19,4 +19,4 @@ install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9"; fi
 
 script:
-  - cmake .; make UnitTest
+  - cmake .; make clean; make UnitTest
