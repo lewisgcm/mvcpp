@@ -14,3 +14,7 @@ benchmarking/cmake_install.cmake
 cmake_install.cmake
 examples/CMakeFiles/
 examples/cmake_install.cmake
+CTestTestfile.cmake
+benchmarking/CTestTestfile.cmake
+benchmarking/Request
+examples/CTestTestfile.cmake
