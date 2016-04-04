@@ -1,0 +1,52 @@
+apply plugin: "cpp"
+
+model {
+    toolChains {
+        gcc(Gcc) {
+            eachPlatform { tools ->
+                tools.cppCompiler.executable = "g++-4.9"
+            }
+        }
+    }
+    components {
+        mvcpp(NativeLibrarySpec) {
+            sources {
+                cpp {
+                    source {
+                        srcDir "source"
+                    }
+                    exportedHeaders {
+                        srcDirs "include", "submodules/json/src"
+                    }
+                }
+            }
+        }
+        test(NativeExecutableSpec) {
+            sources {
+                cpp {
+                    source {
+                        srcDir "test"
+                    }
+                    exportedHeaders {
+                        srcDirs "include", "test", "submodules/json/src"
+                    }
+                    lib library: 'mvcpp', linkage: 'static'
+                }
+            }
+            binaries {
+                all {
+                    if( toolChain in Gcc ) {
+                        linker.args "-lboost_system", "-lcppunit"
+                    }
+                }
+            }
+        }
+    }
+    binaries {
+        all {
+            if (toolChain in Gcc) {
+                cppCompiler.args "-std=c++11"
+            }
+        }
+    }
+}
