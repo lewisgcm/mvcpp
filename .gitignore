@@ -4,6 +4,7 @@ build
 test_out.txt
 test_results.xml
 project.*
+Makefile
 CMakeCache.txt
 CMakeFiles/
 UnitTest
