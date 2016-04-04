@@ -55,6 +55,13 @@ namespace Http {
         void setStatusCode( HttpStatus status );
 
         /**
+         * addHeaders
+         * Add additional headers to the response before sending
+         * @param[in] headers HttpHeaders to add to response headers.
+        */
+        void addHeaders( HttpHeaders headers );
+
+        /**
          * Operator<<.
          * This operator to the response class is used to pipe the input
          * object directly into the output stream. This operator is used

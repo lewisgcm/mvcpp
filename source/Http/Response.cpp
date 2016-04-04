@@ -13,6 +13,10 @@ namespace Http {
         sent_    = false;
     }
 
+    void Response::addHeaders( HttpHeaders headers ) {
+        headers_.insert( headers.begin(), headers.end() );
+    }
+
     void Response::setStatusCode( HttpStatus status ) {
         status_ = status;
     }
