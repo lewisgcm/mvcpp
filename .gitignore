@@ -4,3 +4,12 @@ build
 test_out.txt
 test_results.xml
 project.*
+CMakeCache.txt
+CMakeFiles/
+UnitTest
+benchmarking/CMakeFiles/
+benchmarking/Makefile
+benchmarking/cmake_install.cmake
+cmake_install.cmake
+examples/CMakeFiles/
+examples/cmake_install.cmake
