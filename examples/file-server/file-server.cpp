@@ -63,6 +63,7 @@ int main( int argc, char** argv ) {
                         response.addHeaders({ { "Content-Type", "text" } });
                     }
                 }
+                response.addHeaders({ { "Cache-Control", "max-age=30000000" } });
 
                 while( getline( file, line ) ) {
                     response << line << '\n';
