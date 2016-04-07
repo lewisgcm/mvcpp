@@ -11,14 +11,6 @@ namespace Http {
         }
     }
 
-    Request::Request( HttpMethod method, HttpVersion version, HttpHeaders headers, Query query, string body ) noexcept {
-        method_  = method;
-        version_ = version;
-        query_   = query;
-        body_    = body;
-        headers_ = headers;
-    }
-
     string& Request::getBody() noexcept {
         return body_;
     }

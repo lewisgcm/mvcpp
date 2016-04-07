@@ -47,17 +47,6 @@ namespace Http {
         Request( istream& stream );
 
         /**
-         * Constructor.
-         * Build request based on input parameters
-         * @param[in] method HttpMethod of the request
-         * @param[in] version HttpVersion of the request
-         * @param[in] headers HttpHeaders of headers
-         * @param[in] query Query of the request
-         * @param[in] body String body of the request
-        */
-        Request( HttpMethod method, HttpVersion version, HttpHeaders headers, Query query, string body ) noexcept;
-
-        /**
          * getMethod.
          * Gets the method of the HTTP request
          * @return HttpMethod of the request

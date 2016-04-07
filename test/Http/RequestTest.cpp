@@ -78,7 +78,8 @@ TEST_F (RequestTest, testValidHeaders) {
     );
     ASSERT_NO_THROW( this->request = new Http::Request(iss) );
     Http::HttpHeaders headers = this->request->getHeaders();
-    ASSERT_EQ(    Http::POST, this->request->getMethod() );
+    ASSERT_EQ(    Http::HTTP1_1, this->request->getVersion() );
+    ASSERT_EQ(    Http::POST,    this->request->getMethod() );
     ASSERT_STREQ( "test",     headers["Header"].c_str() );
     ASSERT_STREQ( "test1",    headers["Header1"].c_str() );
     ASSERT_STREQ( "test2",    headers["Header2"].c_str() );
