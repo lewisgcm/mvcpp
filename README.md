@@ -1,5 +1,6 @@
 # MVC++ Fast C++ HTTP Networking Library
 [![Build Status](https://travis-ci.org/lewisgcm/mvcpp.svg?branch=master)](https://travis-ci.org/lewisgcm/mvcpp)
+[![Coverage Status](https://coveralls.io/repos/github/lewisgcm/mvcpp/badge.svg?branch=master)](https://coveralls.io/github/lewisgcm/mvcpp?branch=master)
 [![License Type](https://img.shields.io/badge/license-LGPL%203.0-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0.en.html)
 
 C++ library for HTTP based network applications including additional MVC helpers and routing.
