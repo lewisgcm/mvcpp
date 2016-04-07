@@ -15,10 +15,14 @@ addons:
 compiler:
   - g++
 
+before_install:
+  - pip install --user cpp-coveralls
+  - cd /usr/src/gtest; sudo cmake CMakeLists.txt; sudo make; sudo cp *.a /usr/lib
 install:
   # g++4.9
-  - cd /usr/src/gtest; sudo cmake CMakeLists.txt; sudo make; sudo cp *.a /usr/lib
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9"; fi
 
 script:
   - cmake .; make clean; make UnitTest
+after_success:
+  - coveralls -t tq50tWpv29zRsnWS81mqZx9oSpYca8LkI -i source/
