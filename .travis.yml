@@ -25,4 +25,4 @@ install:
 script:
   - cmake -DCOVERAGE:STRING=TRUE .; make clean; make UnitTest
 after_success:
-  - coveralls -t tq50tWpv29zRsnWS81mqZx9oSpYca8LkI -i source/ -r ./
+  - coveralls -t tq50tWpv29zRsnWS81mqZx9oSpYca8LkI -i source/ --dryrun --gcov gcov-4.9
