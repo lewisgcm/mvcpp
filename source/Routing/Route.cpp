@@ -26,10 +26,6 @@ namespace Routing {
         return action_;
     }
 
-    Http::HttpMethod Route::getMethod() noexcept {
-        return method_;
-    }
-
     bool Route::matchRoute( Http::HttpMethod method, string path ) {
         return method == method_ && regex_match( path, path_regex_ );
     }

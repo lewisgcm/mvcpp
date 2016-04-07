@@ -50,8 +50,6 @@ namespace Routing {
 
         ControllerAction getAction() noexcept;
 
-        Http::HttpMethod getMethod() noexcept;
-
         /**
          * matchRoute.
          * Checks if the given path matches this route. Does not

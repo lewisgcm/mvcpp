@@ -9,8 +9,6 @@
 #include <Exception/HttpException.hpp>
 #include <Http/Query.hpp>
 
-#include <LogMock.hpp>
-
 using namespace std;
 
 class QueryTest : public ::testing::Test {
