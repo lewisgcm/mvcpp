@@ -56,13 +56,25 @@ TEST_F (RequestTest, testValidHTTPVersion) {
     }
 }
 
-TEST_F (RequestTest, testMaxRequestLength) {
+TEST_F (RequestTest, testMaxStatusRequestLength) {
     string query = "a";
     for(int i=0; i<Http::MAX_REQUEST_LINE_LENGTH; i++) {
         query += "a";
     }
     std::istringstream iss(
         "PUT " + query + " HTTP/1.1\r\n\r\n"
+    );
+    ASSERT_THROW( this->request = new Http::Request(iss), Exception::HttpException );
+}
+
+TEST_F (RequestTest, testMaxHeaderRequestLength) {
+    string query = "header: a";
+    for(int i=0; i<Http::MAX_REQUEST_LINE_LENGTH; i++) {
+        query += "a";
+    }
+    std::istringstream iss(
+        "PUT / HTTP/1.1\r\n"
+        "" + query + "\r\n\r\n"
     );
     ASSERT_THROW( this->request = new Http::Request(iss), Exception::HttpException );
 }
