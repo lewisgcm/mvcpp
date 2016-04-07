@@ -6,6 +6,7 @@
 namespace Exception {
     HttpException::HttpException( Http::HttpStatus statusCode ) : Exception( "" ) {
         this->statusCode = statusCode;
+        this->message = Http::HttpResponseStrings.at( statusCode );
     }
 
     Http::HttpStatus HttpException::getStatusCode() {
