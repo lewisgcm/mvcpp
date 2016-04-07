@@ -14,13 +14,13 @@ Dependencies can be installed using the following commands on a debian based Lin
 ```bash
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
 sudo apt-get update;
-sudo apt-get install make g++-4.9 libcppunit-dev libboost-system-dev cmake;
+sudo apt-get install make g++-4.9 libcppunit-dev libboost-system-dev cmake libgtest-dev;
 ```
 
 ## Building
 CMake is used as the build system for this project, follow the steps below to compile:
 ```bash
-git clone https://github.com/lewisgcm/mvcpp
+git clone --recursive https://github.com/lewisgcm/mvcpp
 cd mvcpp; cmake .
 make UnitTest  #Run unit tests
 make RequestBenchmark #Compile request benchmark
