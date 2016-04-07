@@ -31,6 +31,12 @@ TEST_F (QueryTest, testRootParams) {
     ASSERT_EQ   ( false, this->query->hasParam("f") );
 }
 
+TEST_F (QueryTest, testNoParam) {
+    ASSERT_NO_THROW( this->query = new Http::Query("/") );
+    ASSERT_STREQ( "/",   this->query->getPath().c_str() );
+    ASSERT_STREQ( "",    this->query->getParam("t").c_str() );
+}
+
 TEST_F (QueryTest, testEmptyParams) {
     ASSERT_NO_THROW( this->query = new Http::Query("/asdasdasdadasd?") );
     ASSERT_STREQ( "/asdasdasdadasd", this->query->getPath().c_str() );

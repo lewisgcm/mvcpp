@@ -34,3 +34,31 @@ TEST_F (ResponseTest, testHeaders) {
     );
     ASSERT_STREQ( correct.c_str(), oss.str().c_str() );
 }
+
+TEST_F (ResponseTest, testReponseCode) {
+    std::ostringstream oss;
+    this->response = new Http::Response( Http::HTTP1_1, { {"header", "value"} }, oss );
+    this->response->setStatusCode( Http::NOT_FOUND );
+    *this->response << "";
+    
+    std::string correct(
+        "HTTP/1.1 404 Not Found\r\n"
+        "header: value\r\n"
+        "\r\n"
+    );
+    ASSERT_STREQ( correct.c_str(), oss.str().c_str() );
+}
+
+TEST_F (ResponseTest, testAddHeaders) {
+    std::ostringstream oss;
+    this->response = new Http::Response( Http::HTTP1_1, {}, oss );
+    this->response->addHeaders( { { "header", "value" } } );
+    *this->response << "";
+    
+    std::string correct(
+        "HTTP/1.1 200 Ok\r\n"
+        "header: value\r\n"
+        "\r\n"
+    );
+    ASSERT_STREQ( correct.c_str(), oss.str().c_str() );
+}
