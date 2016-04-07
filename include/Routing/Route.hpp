@@ -34,9 +34,9 @@ namespace Routing {
     class Route {
 
         Http::HttpMethod method_;
-        vector<string> pathParams_;
+        vector<string> path_params_;
         ControllerAction action_;
-        regex pathRegex_;
+        regex path_regex_;
 
     public:
 

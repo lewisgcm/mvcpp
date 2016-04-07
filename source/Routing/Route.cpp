@@ -9,15 +9,17 @@ namespace Routing {
         method_ = method;
         action_ = action;
 
-        smatch match;
-        string path_ = path;
-        while( regex_search( path, match, regex("\\{[A-Za-z]+\\}")) ) {
-            path_ = path_.replace( path_.find(match[0]), match.length(0), "(.+)" );
-            path  = match.suffix().str();
-            string name = match[0];
-            pathParams_.push_back( name.substr( 1, name.length()-2 ) );
+        string path_;
+
+        regex param_regex("\\{([A-Za-z]+)\\}");
+        regex_iterator<string::iterator> end;
+        regex_iterator<string::iterator> match( path.begin(), path.end(), param_regex );
+        while( match != end ) {
+            path_params_.push_back( (*match)[1] );
+            match++;
         }
-        pathRegex_ = regex( path_ );
+        path_ = regex_replace ( path, param_regex, "(.+)" );
+        path_regex_ = regex( path_ );
     }
 
     ControllerAction Route::getAction() noexcept {
@@ -29,16 +31,19 @@ namespace Routing {
     }
 
     bool Route::matchRoute( Http::HttpMethod method, string path ) {
-        return method == method_ && regex_match( path, pathRegex_ );
+        return method == method_ && regex_match( path, path_regex_ );
     }
 
     void Route::setQueryRouteParams( Http::Query& query ) {
         map<string, string> params;
         smatch match;
-        regex_match( query.getPath(), match, pathRegex_ );
-        for(unsigned int i=0; i < match.size()-1 && i < pathParams_.size(); i++) {
-            params[ pathParams_[i] ] = match[i+1];
+        string path = query.getPath();
+        regex_match( path, match, path_regex_ );
+
+        for(unsigned int i=0; i < path_params_.size(); i++) {
+            params[ path_params_[i] ] = std::string(match[i+1]);
         }
+
         query.addParams( params );
     }
 }

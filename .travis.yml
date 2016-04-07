@@ -17,6 +17,7 @@ compiler:
 
 install:
   # g++4.9
+  - cd /usr/src/gtest; sudo cmake CMakeLists.txt; sudo make; sudo cp *.a /usr/lib
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9"; fi
 
 script:
