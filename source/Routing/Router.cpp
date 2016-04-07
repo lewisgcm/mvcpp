@@ -5,10 +5,6 @@
 
 namespace Routing {
 
-    Router::Router() {
-        
-    }
-
     Router::Router( const vector<Route> routes ) {
         routes_ = routes;
     }
