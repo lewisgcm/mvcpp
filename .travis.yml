@@ -17,7 +17,7 @@ compiler:
 
 before_install:
   - pip install --user cpp-coveralls
-  - cd /usr/src/gtest; sudo cmake CMakeLists.txt; sudo make; sudo cp *.a /usr/lib
+  - mkdir ~/gtest && cd ~/gtest && cmake /usr/src/gtest -DBUILD_SHARED_LIBS=ON && make && sudo cp -vp libgtest*.so /usr/local/lib/ && sudo ldconfig && cd -
 install:
   # g++4.9
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9"; fi
