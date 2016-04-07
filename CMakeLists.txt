@@ -22,9 +22,11 @@ target_include_directories (mvcpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 ##Unit Testing
 enable_testing()
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
 include_directories(test)
 add_executable ( UnitTest ${TEST_SOURCES} )
-target_link_libraries ( UnitTest LINK_PUBLIC mvcpp pthread boost_system cppunit )
+target_link_libraries ( UnitTest LINK_PUBLIC mvcpp boost_system cppunit ${GTEST_BOTH_LIBRARIES} pthread )
 add_custom_command(
     TARGET UnitTest
     POST_BUILD

@@ -10,6 +10,7 @@ addons:
       - g++-4.9
       - libcppunit-dev
       - libboost-system-dev
+      - libgtest-dev
 
 compiler:
   - g++

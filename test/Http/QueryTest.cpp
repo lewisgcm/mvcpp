@@ -1,58 +1,70 @@
 #include <Http/QueryTest.hpp>
 
-
-void QueryTest::testMalformedQuery() {
-    CPPUNIT_ASSERT_NO_THROW( new Http::Query("==?====&&&&&&&") );
+void QueryTest::SetUp() {
+    this->query = NULL;
 }
 
-void QueryTest::testEmptyQuery() {
-    CPPUNIT_ASSERT_NO_THROW( new Http::Query("") );
+void QueryTest::TearDown() {
+    if( this->query == NULL ) {
+        delete this->query;
+    }
 }
 
-void QueryTest::testRootQuery() {
-    Http::Query * q;
-    CPPUNIT_ASSERT_NO_THROW( q = new Http::Query("/") );
-    CPPUNIT_ASSERT_EQUAL( true, q->getPath() == "/" );
+TEST_F (QueryTest, testMalformedQuery) {
+    ASSERT_THROW( this->query = new Http::Query("==?====&&&&&&&"), Exception::HttpException );
 }
 
-void QueryTest::testRootParams() {
-    Http::Query * q;
-    CPPUNIT_ASSERT_NO_THROW( q = new Http::Query("/?t=p&p=t") );
-    CPPUNIT_ASSERT_EQUAL( true, q->getPath() == "/" );
-    CPPUNIT_ASSERT_EQUAL( true, q->getParam("t") == "p" );
-    CPPUNIT_ASSERT_EQUAL( true, q->getParam("p") == "t" );
-    CPPUNIT_ASSERT_EQUAL( false, q->hasParam("f") );
+TEST_F (QueryTest, testEmptyQuery) {
+    ASSERT_THROW( this->query = new Http::Query(""), Exception::HttpException );
 }
 
-void QueryTest::testEmptyParams() {
-    Http::Query * q;
-    CPPUNIT_ASSERT_NO_THROW( q = new Http::Query("/asdasdasdadasd?") );
-    CPPUNIT_ASSERT_EQUAL( true, q->getPath() == "/asdasdasdadasd" );
+TEST_F (QueryTest, testRootQuery) {
+    ASSERT_NO_THROW( this->query = new Http::Query("/") );
+    ASSERT_STREQ( "/", this->query->getPath().c_str() );
 }
 
-void QueryTest::testParamsNoEquals() {
-    Http::Query * q;
-    CPPUNIT_ASSERT_NO_THROW( q = new Http::Query("/?t&p") );
-    CPPUNIT_ASSERT_EQUAL( true, q->getPath() == "/" );
-    CPPUNIT_ASSERT_EQUAL( true, q->hasParam("t") );
-    CPPUNIT_ASSERT_EQUAL( true, q->hasParam("p") );
-    CPPUNIT_ASSERT_EQUAL( false, q->hasParam("f") );
+TEST_F (QueryTest, testRootParams) {
+    ASSERT_NO_THROW( this->query = new Http::Query("/?t=p&p=t") );
+    ASSERT_STREQ( "/",   this->query->getPath().c_str() );
+    ASSERT_STREQ( "p",   this->query->getParam("t").c_str() );
+    ASSERT_STREQ( "t",   this->query->getParam("p").c_str() );
+    ASSERT_EQ   ( false, this->query->hasParam("f") );
 }
 
-void QueryTest::testParamsNormal() {
-    Http::Query * q;
-    CPPUNIT_ASSERT_NO_THROW( q = new Http::Query("/hello_world/?t=p&p=t") );
-    CPPUNIT_ASSERT_EQUAL( true, q->getPath() == "/hello_world/" );
-    CPPUNIT_ASSERT_EQUAL( true, q->getParam("t") == "p" );
-    CPPUNIT_ASSERT_EQUAL( true, q->getParam("p") == "t" );
-    CPPUNIT_ASSERT_EQUAL( false, q->hasParam("f") );
+TEST_F (QueryTest, testEmptyParams) {
+    ASSERT_NO_THROW( this->query = new Http::Query("/asdasdasdadasd?") );
+    ASSERT_STREQ( "/asdasdasdadasd", this->query->getPath().c_str() );
 }
 
-void QueryTest::testParamsNormalCast() {
-    Http::Query * q;
-    CPPUNIT_ASSERT_NO_THROW( q = new Http::Query("/hello_world/?t=p&p=5") );
-    CPPUNIT_ASSERT_EQUAL( true, q->getPath() == "/hello_world/" );
-    CPPUNIT_ASSERT_EQUAL( true, q->getParam("t") == "p" );
-    CPPUNIT_ASSERT_EQUAL( true, q->getParam<int>("p") == 5 );
-    CPPUNIT_ASSERT_EQUAL( false, q->hasParam("f") );
+TEST_F (QueryTest, testParamsNoValues) {
+    ASSERT_NO_THROW( this->query = new Http::Query("/?t&p") );
+    ASSERT_STREQ( "/",   this->query->getPath().c_str() );
+    ASSERT_STREQ( "",    this->query->getParam("t").c_str() );
+    ASSERT_STREQ( "",    this->query->getParam("p").c_str() );
+    ASSERT_EQ   ( true,  this->query->hasParam("t") );
+    ASSERT_EQ   ( true,  this->query->hasParam("p") );
+}
+
+TEST_F (QueryTest, testParamsSubDir) {
+    ASSERT_NO_THROW( this->query = new Http::Query("/hello_world/?t=p&p=t") );
+    ASSERT_STREQ( "/hello_world/", this->query->getPath().c_str() );
+    ASSERT_STREQ( "p",             this->query->getParam("t").c_str() );
+    ASSERT_STREQ( "t",             this->query->getParam("p").c_str() );
+    ASSERT_EQ   ( false,           this->query->hasParam("f") );
+}
+
+TEST_F (QueryTest, testParamsSubDirCast) {
+    ASSERT_NO_THROW( this->query = new Http::Query("/hello_world/?t=p&p=5") );
+    ASSERT_STREQ( "/hello_world/", this->query->getPath().c_str() );
+    ASSERT_STREQ( "p",             this->query->getParam("t").c_str() );
+    ASSERT_EQ   ( 5,               this->query->getParam<int>("p") );
+    ASSERT_EQ   ( false,           this->query->hasParam("f") );
+}
+
+TEST_F (QueryTest, testParamsSubDirBadCast) {
+    ASSERT_NO_THROW( this->query = new Http::Query("/hello_world/?t=p&p=aa") );
+    ASSERT_STREQ( "/hello_world/", this->query->getPath().c_str() );
+    ASSERT_STREQ( "p",             this->query->getParam("t").c_str() );
+    ASSERT_EQ   ( false,           this->query->hasParam("f") );
+    ASSERT_THROW( this->query->getParam<int>("p"), std::exception );
 }

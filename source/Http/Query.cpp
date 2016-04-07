@@ -40,6 +40,10 @@ namespace Http {
         size_t p_end = query.find("?");
         path_ = query.substr( 0, p_end );
 
+        if( path_[0] != '/' ) {
+            return false;
+        }
+
         if( p_end+1 < query.size() ) {
 
             std::string query_tail = query.substr( p_end+1, string::npos );
