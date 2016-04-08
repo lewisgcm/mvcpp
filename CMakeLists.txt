@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2.2)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Release)
-set(COVERAGE "FALSE" CACHE STRING "Determines wether or not gcov should be used to generate coverage.")
+set(COVERAGE "FALSE" STRING "Determines wether or not gcov should be used to generate coverage.")
 #Usage cmake -DCOVERAGE:STRING=TRUE .
 
 project(mvcpp)
@@ -15,7 +15,8 @@ set(GCC_COVERAGE_LINK_FLAGS    "-lgcov -fprofile-arcs")
 file(GLOB SOURCES "source/**/*.cpp")
 file(GLOB TEST_SOURCES "test/**/*.cpp" "test/test.cpp")
 
-find_package( Boost REQUIRED COMPONENTS system )
+find_package( Threads )
+find_package( Boost 1.54 REQUIRED COMPONENTS system )
 
 #Include json.hpp and boost
 include_directories(include submodules/json/src ${Boost_INCLUDE_DIRS} )
@@ -39,9 +40,9 @@ add_executable ( UnitTest ${TEST_SOURCES} )
 if(("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") AND ("${COVERAGE}" STREQUAL "TRUE"))
     message( "Compiling UnitTest with code coverage." ) 
     target_compile_options( UnitTest PRIVATE "${GCC_COVERAGE_COMPILE_FLAGS}" )
-    target_link_libraries ( UnitTest LINK_PUBLIC mvcpp ${Boost_SYSTEM_LIBRARY} ${GTEST_BOTH_LIBRARIES} pthread ${GCC_COVERAGE_LINK_FLAGS} )
+    target_link_libraries ( UnitTest LINK_PUBLIC mvcpp ${Boost_SYSTEM_LIBRARY} ${GTEST_BOTH_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${GCC_COVERAGE_LINK_FLAGS} )
 else()
-    target_link_libraries ( UnitTest LINK_PUBLIC mvcpp ${Boost_SYSTEM_LIBRARY} ${GTEST_BOTH_LIBRARIES} pthread )
+    target_link_libraries ( UnitTest LINK_PUBLIC mvcpp ${Boost_SYSTEM_LIBRARY} ${GTEST_BOTH_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
 endif()
 
 add_custom_command(

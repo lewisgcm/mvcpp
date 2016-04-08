@@ -9,7 +9,7 @@ Various benchmarks have been included in the `benchmarking/*` directory and
 examples can be viewed in the `examples/*` directory.
 
 ## Getting Started
-Building this project requires cmake, boost-system, cppunit and a C++11 compiler. 
+Building this project requires cmake 3, boost-system 1.54, google test and a C++11 compiler. 
 Dependencies can be installed using the following commands on a debian based Linux system:
 ```bash
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
