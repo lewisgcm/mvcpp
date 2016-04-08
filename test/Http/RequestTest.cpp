@@ -97,3 +97,44 @@ TEST_F (RequestTest, testValidHeaders) {
     ASSERT_STREQ( "test2",    headers["Header2"].c_str() );
     ASSERT_STREQ( "",         headers["Header3"].c_str() );
 }
+
+TEST_F (RequestTest, testValidBody) {
+    std::istringstream iss(
+        "POST / HTTP/1.1\r\n"
+        "Content-Length: 5\r\n"
+        "Content-Type: application/json\r\n"
+        "\r\n"
+        "12345"
+    );
+    ASSERT_NO_THROW( this->request = new Http::Request(iss) );
+    Http::HttpHeaders headers = this->request->getHeaders();
+    ASSERT_EQ(    Http::HTTP1_1, this->request->getVersion() );
+    ASSERT_EQ(    Http::POST,    this->request->getMethod() );
+    ASSERT_STREQ( "12345",       this->request->getBody().c_str() );
+}
+
+TEST_F (RequestTest, testLongInvalidBody) {
+    std::istringstream iss(
+        "POST / HTTP/1.1\r\n"
+        "Content-Length: 5\r\n"
+        "Content-Type: application/json\r\n"
+        "\r\n"
+        "12345asdasdasdasd"
+    );
+    ASSERT_NO_THROW( this->request = new Http::Request(iss) );
+    Http::HttpHeaders headers = this->request->getHeaders();
+    ASSERT_EQ(    Http::HTTP1_1, this->request->getVersion() );
+    ASSERT_EQ(    Http::POST,    this->request->getMethod() );
+    ASSERT_STREQ( "12345",       this->request->getBody().c_str() );
+}
+
+TEST_F (RequestTest, testInvalidBodyLength) {
+    std::istringstream iss(
+        "POST / HTTP/1.1\r\n"
+        "Content-Length: asdasd\r\n"
+        "Content-Type: application/json\r\n"
+        "\r\n"
+        "12345asdasdasdasd"
+    );
+    ASSERT_THROW( this->request = new Http::Request(iss), std::exception );
+}

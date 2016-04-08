@@ -16,6 +16,8 @@ namespace Http {
 
     /*Constants for HTTP/Application configuration*/
     const unsigned int MAX_REQUEST_LINE_LENGTH = 2048;
+    const unsigned int MAX_REQUEST_BODY_LENGTH = 2048;
+    const unsigned int MAX_REQUEST_TIMEOUT     = 120;
 
     /*HTTP Constant enumeration types*/
     enum HttpMethod  { GET, POST, PUT, DELETE, HEAD, TRACE };

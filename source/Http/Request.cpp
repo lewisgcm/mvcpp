@@ -40,7 +40,7 @@ namespace Http {
             line.pop_back();
         }
 
-        if( line.size() > MAX_REQUEST_LINE_LENGTH ) {
+        if( line.size() > Http::MAX_REQUEST_LINE_LENGTH ) {
             Log::Warning("Request exceeds maximum status line length.");
             return false;
         }
@@ -73,7 +73,7 @@ namespace Http {
                 break;
             }
 
-            if( line.size() > MAX_REQUEST_LINE_LENGTH ) {
+            if( line.size() > Http::MAX_REQUEST_LINE_LENGTH ) {
                 Log::Warning("Request exceeds maximum status line length.");
                 return false;
             }
@@ -89,8 +89,21 @@ namespace Http {
 
         /*Copy remainder of the stream into the body string*/
         /*This should be handled correctly!!!*/
-        if( headers_.find( "Content-Length" ) != headers_.end() && headers_.find("Transfer-Encoding") != headers_.end() ) {
-            copy( istreambuf_iterator<char>(stream), istreambuf_iterator<char>(), back_inserter(body_) );
+        if( headers_.find( "Content-Length" )    != headers_.end() ) {
+
+            unsigned int length = boost::lexical_cast<unsigned int>( headers_[ "Content-Length" ] );
+
+            if( length > Http::MAX_REQUEST_BODY_LENGTH ) {
+                Log::Warning("Request body is larger than server allows.");
+                return false;
+            }
+
+            //Copy either content length bytes or end of stream
+            std::copy_n(
+                istreambuf_iterator<char>(stream),
+                length,
+                back_inserter(body_)
+            );
         }
 
         return true;

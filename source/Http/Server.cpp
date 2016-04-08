@@ -41,8 +41,9 @@ namespace Http {
         }
     }
 
-    void Server::threadHandler( std::iostream* stream, Routing::Router router, Routing::ControllerErrorAction onError ) {
+    void Server::threadHandler( tcp::iostream* stream, Routing::Router router, Routing::ControllerErrorAction onError ) {
         try {
+            stream->expires_from_now( boost::posix_time::seconds( Http::MAX_REQUEST_TIMEOUT ) );
             Http::Request  request( *stream );
             Http::Response response( Http::HTTP1_1, {
                 { "Server", "MVC++ Server" }

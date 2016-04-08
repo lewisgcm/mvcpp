@@ -25,6 +25,9 @@ int main() {
             }),
             Routing::Route( Http::GET,  "/api/test/{id}", []( Http::Request& request, Http::Response& response ) -> void {
                 response << "Testing!!!: IO:" << request.getQuery().getParam<int>( "id" ) << "\n";
+            }),
+            Routing::Route( Http::POST,  "/api/test", []( Http::Request& request, Http::Response& response ) -> void {
+                response << "Testing!!!: IO:" << request.getBody() << "\n";
             })
         });
 
