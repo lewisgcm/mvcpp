@@ -4,6 +4,7 @@ addons:
     sources:
       - george-edison55-precise-backports
       - ubuntu-toolchain-r-test
+      - libreoffice-ppa
     packages:
       - cmake
       - cmake-data
