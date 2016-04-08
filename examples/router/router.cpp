@@ -17,7 +17,22 @@
 #include <Routing/Router.hpp>
 #include <Http/Server.hpp>
 
+void sigHandler( int s ) {
+    printf( "Existing Server\n" );
+    exit(0); 
+}
+
 int main() {
+
+
+    struct sigaction sigIntHandler;
+
+    sigIntHandler.sa_handler = sigHandler;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+
+    sigaction(SIGINT, &sigIntHandler, NULL);
+
     try {
         Routing::Router router({
             Routing::Route( Http::GET,  "/", []( Http::Request& request, Http::Response& response ) -> void {

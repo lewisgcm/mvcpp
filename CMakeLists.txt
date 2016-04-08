@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2.2)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Release)
-set(COVERAGE "FALSE" STRING "Determines wether or not gcov should be used to generate coverage.")
+set(COVERAGE "FALSE" CACHE STRING "Determines wether or not gcov should be used to generate coverage.")
 #Usage cmake -DCOVERAGE:STRING=TRUE .
 
 project(mvcpp)
