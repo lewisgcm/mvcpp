@@ -138,3 +138,15 @@ TEST_F (RequestTest, testInvalidBodyLength) {
     );
     ASSERT_THROW( this->request = new Http::Request(iss), std::exception );
 }
+
+TEST_F (RequestTest, testOverMaxLength) {
+    std::string max_length = boost::lexical_cast<std::string>( Http::MAX_REQUEST_BODY_LENGTH+1 );
+    std::istringstream iss(
+        "POST / HTTP/1.1\r\n"
+        "Content-Length: " + max_length + "\r\n"
+        "Content-Type: application/json\r\n"
+        "\r\n"
+        "body"
+    );
+    ASSERT_THROW( this->request = new Http::Request(iss), std::exception );
+}
