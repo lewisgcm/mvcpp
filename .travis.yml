@@ -9,7 +9,8 @@ addons:
       - cmake-data
       - g++-4.9
       - libcppunit-dev
-      - libboost-system1.55-dev
+      - libboost-system1.54-dev
+      - libboost-system1.54
       - libgtest-dev
 
 compiler:
