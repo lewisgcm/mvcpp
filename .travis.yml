@@ -5,7 +5,6 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-      - libreoffice-ppa
     packages:
       - cmake
       - cmake-data
