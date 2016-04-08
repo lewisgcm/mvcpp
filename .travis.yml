@@ -1,8 +1,9 @@
+sudo: required
+dist: trusty
 language: cpp
 addons:
   apt:
     sources:
-      - george-edison55-precise-backports
       - ubuntu-toolchain-r-test
       - libreoffice-ppa
     packages:
@@ -16,7 +17,6 @@ compiler:
   - g++
 
 before_install:
-  - sudo apt-get install -qq libboost-system1.54-dev
   - pip install --user cpp-coveralls
   - mkdir ~/gtest && cd ~/gtest && cmake /usr/src/gtest -DBUILD_SHARED_LIBS=ON && make && sudo cp -vp libgtest*.so /usr/local/lib/ && sudo ldconfig && cd -
 install:
