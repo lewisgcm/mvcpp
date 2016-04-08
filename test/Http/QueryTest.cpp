@@ -2,12 +2,14 @@
 
 void QueryTest::SetUp() {
     this->query = NULL;
+    REDIRECT_ON( stderr );
 }
 
 void QueryTest::TearDown() {
     if( this->query == NULL ) {
         delete this->query;
     }
+    REDIRECT_OFF( stderr );
 }
 
 TEST_F (QueryTest, testMalformedQuery) {

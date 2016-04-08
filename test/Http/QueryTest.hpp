@@ -8,6 +8,7 @@
 #include <Http/Http.hpp>
 #include <Exception/HttpException.hpp>
 #include <Http/Query.hpp>
+#include <LogRedirect.hpp>
 
 using namespace std;
 

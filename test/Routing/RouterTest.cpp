@@ -1,9 +1,11 @@
 #include <Routing/RouterTest.hpp>
 
 void RouterTest::SetUp() {
+    REDIRECT_ON( stderr );
 }
 
 void RouterTest::TearDown() {
+    REDIRECT_OFF( stderr );
 }
 
 TEST_F (RouterTest, NotFoundRoute) {

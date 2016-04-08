@@ -14,6 +14,7 @@
 #include <Routing/Router.hpp>
 #include <Routing/Route.hpp>
 #include <Exception/HttpException.hpp>
+#include <LogRedirect.hpp>
 
 using namespace std;
 
