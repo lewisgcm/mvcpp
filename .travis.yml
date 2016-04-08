@@ -11,7 +11,7 @@ addons:
       - g++-4.9
       - libcppunit-dev
       - libgtest-dev
-      - libboost-system1.54-dev
+      - libboost-system-dev
 
 compiler:
   - g++
