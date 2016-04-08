@@ -3,7 +3,7 @@
 namespace Http {
 
     Server::Server( unsigned int port, std::string host ) {
-        this->port_   = port;
+        this->port_ = port;
     }
 
     int Server::run( Routing::Router& router, Routing::ControllerErrorAction onError ) {
@@ -41,7 +41,7 @@ namespace Http {
         }
     }
 
-    void Server::threadHandler( tcp::iostream* stream, Routing::Router router, Routing::ControllerErrorAction onError ) {
+    void Server::threadHandler( std::iostream* stream, Routing::Router router, Routing::ControllerErrorAction onError ) {
         try {
             Http::Request  request( *stream );
             Http::Response response( Http::HTTP1_1, {

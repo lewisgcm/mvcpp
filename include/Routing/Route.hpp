@@ -48,6 +48,11 @@ namespace Routing {
         */
         Route( Http::HttpMethod method, string path, ControllerAction action );
 
+        /**
+         * getAction.
+         * Get the action of this route.
+         * @return ControllerAction of this route
+        */
         ControllerAction getAction() noexcept;
 
         /**

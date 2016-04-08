@@ -26,6 +26,6 @@ namespace Http {
         int run( Routing::ControllerAction onAccept, Routing::ControllerErrorAction onError );
 
     private:
-        static void threadHandler( tcp::iostream* stream, Routing::Router router, Routing::ControllerErrorAction onError );
+        static void threadHandler( std::iostream* stream, Routing::Router router, Routing::ControllerErrorAction onError );
     };
 }
