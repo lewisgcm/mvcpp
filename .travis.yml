@@ -9,14 +9,13 @@ addons:
       - cmake-data
       - g++-4.9
       - libcppunit-dev
-      - libboost-system1.54-dev
-      - libboost-system1.54
       - libgtest-dev
 
 compiler:
   - g++
 
 before_install:
+  - sudo apt-get install -qq libboost-system1.54-dev
   - pip install --user cpp-coveralls
   - mkdir ~/gtest && cd ~/gtest && cmake /usr/src/gtest -DBUILD_SHARED_LIBS=ON && make && sudo cp -vp libgtest*.so /usr/local/lib/ && sudo ldconfig && cd -
 install:
