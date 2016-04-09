@@ -18,6 +18,11 @@ namespace Http {
     const unsigned int MAX_REQUEST_LINE_LENGTH = 2048;
     const unsigned int MAX_REQUEST_BODY_LENGTH = 2048;
     const unsigned int MAX_REQUEST_TIMEOUT     = 120;
+    const HttpHeaders  DEFAULT_SERVER_HEADERS  = {
+        { "server",          "MVC++ v0.1a" },
+        { "content-type",    "text/plain" },
+        { "x-frame-options", "SAMEORIGIN"}
+    };
 
     /*HTTP Constant enumeration types*/
     enum HttpMethod  { GET, POST, PUT, DELETE, HEAD, TRACE };

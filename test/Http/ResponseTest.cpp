@@ -39,10 +39,12 @@ TEST_F (ResponseTest, testReponseCode) {
     std::ostringstream oss;
     this->response = new Http::Response( Http::HTTP1_1, { {"header", "value"} }, oss );
     this->response->setStatusCode( Http::NOT_FOUND );
+    this->response->setContentType( "application/json" );
     *this->response << "";
     
     std::string correct(
         "HTTP/1.1 404 Not Found\r\n"
+        "content-type: application/json\r\n"
         "header: value\r\n"
         "\r\n"
     );

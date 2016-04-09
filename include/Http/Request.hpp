@@ -68,6 +68,13 @@ namespace Http {
         Query& getQuery() noexcept;
 
         /**
+         * getContentType.
+         * Get the content type for the request.
+         * @return string type of request or empty string if not specified
+        */
+        string getContentType() noexcept;
+
+        /**
          * getBody.
          * This version of get body will parse an incoming json
          * request and return the approipriate model.

@@ -52,14 +52,21 @@ namespace Http {
          * Set the status code for this response.
          * @param[in] status Status code of the response
         */
-        void setStatusCode( HttpStatus status );
+        void setStatusCode( HttpStatus status ) noexcept;
+
+        /**
+         * setContentType
+         * Set the content type for the response.
+         * @param[in] string type Content type
+        */
+         void setContentType( string type ) noexcept;
 
         /**
          * addHeaders
          * Add additional headers to the response before sending
          * @param[in] headers HttpHeaders to add to response headers.
         */
-        void addHeaders( HttpHeaders headers );
+        void addHeaders( HttpHeaders headers ) noexcept;
 
         /**
          * Operator<<.

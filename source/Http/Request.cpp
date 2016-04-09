@@ -31,6 +31,10 @@ namespace Http {
         return headers_;
     }
 
+    string Request::getContentType() noexcept {
+        return headers_[ "content-type" ];
+    }
+
     bool Request::parse( istream& stream ) {
 
         string line;
@@ -81,17 +85,18 @@ namespace Http {
             vector<string> header;
             boost::split( header, line, boost::is_any_of(":") );
             if( header.size() == 2 ) {
-                boost::trim(header[0]);
-                boost::trim(header[1]);
+                boost::trim( header[0] );
+                boost::trim( header[1] );
+                boost::algorithm::to_lower( header[0] );
+                boost::algorithm::to_lower( header[1] );
                 headers_[ header[0] ] = header[1];
             }
         }
 
         /*Copy remainder of the stream into the body string*/
-        /*This should be handled correctly!!!*/
-        if( headers_.find( "Content-Length" )    != headers_.end() ) {
+        if( headers_.find( "content-length" ) != headers_.end() ) {
 
-            unsigned int length = boost::lexical_cast<unsigned int>( headers_[ "Content-Length" ] );
+            unsigned int length = boost::lexical_cast<unsigned int>( headers_[ "content-length" ] );
 
             if( length > Http::MAX_REQUEST_BODY_LENGTH ) {
                 Log::Warning("Request body is larger than server allows.");

@@ -84,7 +84,7 @@ TEST_F (RequestTest, testValidHeaders) {
         "POST / HTTP/1.1\r\n"
         "Header: test\r\n"
         "Header1:test1\r\n"
-        "  Header2  :  test2  \r\n"
+        "  Header2  :  TesT2  \r\n"
         "  Header3  \r\n"
         "\r\n"
     );
@@ -92,10 +92,10 @@ TEST_F (RequestTest, testValidHeaders) {
     Http::HttpHeaders headers = this->request->getHeaders();
     ASSERT_EQ(    Http::HTTP1_1, this->request->getVersion() );
     ASSERT_EQ(    Http::POST,    this->request->getMethod() );
-    ASSERT_STREQ( "test",     headers["Header"].c_str() );
-    ASSERT_STREQ( "test1",    headers["Header1"].c_str() );
-    ASSERT_STREQ( "test2",    headers["Header2"].c_str() );
-    ASSERT_STREQ( "",         headers["Header3"].c_str() );
+    ASSERT_STREQ( "test",     headers["header"].c_str() );
+    ASSERT_STREQ( "test1",    headers["header1"].c_str() );
+    ASSERT_STREQ( "test2",    headers["header2"].c_str() );
+    ASSERT_STREQ( "",         headers["header3"].c_str() );
 }
 
 TEST_F (RequestTest, testValidBody) {
@@ -123,9 +123,10 @@ TEST_F (RequestTest, testLongInvalidBody) {
     );
     ASSERT_NO_THROW( this->request = new Http::Request(iss) );
     Http::HttpHeaders headers = this->request->getHeaders();
-    ASSERT_EQ(    Http::HTTP1_1, this->request->getVersion() );
-    ASSERT_EQ(    Http::POST,    this->request->getMethod() );
-    ASSERT_STREQ( "12345",       this->request->getBody().c_str() );
+    ASSERT_EQ(    Http::HTTP1_1,         this->request->getVersion() );
+    ASSERT_EQ(    Http::POST,            this->request->getMethod() );
+    ASSERT_STREQ( "application/json",    this->request->getContentType().c_str() );
+    ASSERT_STREQ( "12345",               this->request->getBody().c_str() );
 }
 
 TEST_F (RequestTest, testInvalidBodyLength) {

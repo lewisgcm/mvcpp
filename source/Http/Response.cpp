@@ -13,11 +13,15 @@ namespace Http {
         sent_    = false;
     }
 
-    void Response::addHeaders( HttpHeaders headers ) {
+    void Response::addHeaders( HttpHeaders headers ) noexcept {
         headers_.insert( headers.begin(), headers.end() );
     }
 
-    void Response::setStatusCode( HttpStatus status ) {
+    void Response::setContentType( std::string type ) noexcept {
+        headers_[ "content-type" ] = type;
+    }
+
+    void Response::setStatusCode( HttpStatus status ) noexcept {
         status_ = status;
     }
 

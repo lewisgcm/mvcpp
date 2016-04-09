@@ -29,10 +29,10 @@ namespace Http {
 
                 try { 
                     Http::Request  request( *stream );
-                    Http::Response response( Http::HTTP1_1, { { "Server", "MVC++ Server" } }, *stream );
+                    Http::Response response( Http::HTTP1_1, Http::DEFAULT_SERVER_HEADERS, *stream );
                     onAccept( request, response );
                 } catch( ... ) {
-                    Http::Response response( Http::HTTP1_1, { { "Server", "MVC++ Server" } }, *stream );
+                    Http::Response response( Http::HTTP1_1, Http::DEFAULT_SERVER_HEADERS, *stream );
                     onError( response, std::current_exception() );
                 }
 
@@ -45,13 +45,11 @@ namespace Http {
         try {
             stream->expires_from_now( boost::posix_time::seconds( Http::MAX_REQUEST_TIMEOUT ) );
             Http::Request  request( *stream );
-            Http::Response response( Http::HTTP1_1, {
-                { "Server", "MVC++ Server" }
-            }, *stream );
+            Http::Response response( Http::HTTP1_1, Http::DEFAULT_SERVER_HEADERS, *stream );
 
             router.handleRequest( request, response );
         } catch( ... ) {
-            Http::Response response( Http::HTTP1_1, { { "Server", "MVC++ Server" } }, *stream );
+            Http::Response response( Http::HTTP1_1, Http::DEFAULT_SERVER_HEADERS, *stream );
             onError( response, std::current_exception() );
         }
         delete stream;
