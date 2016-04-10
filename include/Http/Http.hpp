@@ -21,8 +21,12 @@ namespace Http {
     const HttpHeaders  DEFAULT_SERVER_HEADERS  = {
         { "server",          "MVC++ v0.1a" },
         { "content-type",    "text/plain" },
-        { "x-frame-options", "SAMEORIGIN"}
+        { "x-frame-options", "SAMEORIGIN"},
+        { "cache-control",   "no-cache, no-store, must-revalidate"},
+        { "pragma",          "no-cache" },
+        { "expires",         "0" }
     };
+    const string       HTTP_SESSION_HEADER_KEY  = "MVCPP-SESSION-ID";
 
     /*HTTP Constant enumeration types*/
     enum HttpMethod  { GET, POST, PUT, DELETE, HEAD, TRACE };

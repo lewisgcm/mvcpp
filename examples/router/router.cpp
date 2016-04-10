@@ -50,8 +50,18 @@ int main() {
         server.run(
             router,
             []( Http::Response response, std::exception_ptr exception ) -> void {
-                response.setStatusCode( Http::INTERNAL_SERVER_ERROR );
-                response << "A bad error!";
+                try {
+                    std::rethrow_exception( exception );
+                } catch( Exception::HttpException e ) {
+                    response.setContentType( "text/html" );
+                    response.setStatusCode( e.getStatusCode() );
+                    response << "<html><head><title>" + e.getMessage() + "</title></head>";
+                    response << "<body><h1><b>" << e.getStatusCode() << "</b> ";
+                    response << e.getMessage() + "</h1></body></html>";
+                } catch( ... ) {
+                    response.setStatusCode( Http::INTERNAL_SERVER_ERROR );
+                    response << "A bad error!";
+                }
             }
         );
     } catch( std::regex_error& e ) {
