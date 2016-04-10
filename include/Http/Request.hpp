@@ -16,6 +16,7 @@
 #include <Exception/HttpException.hpp>
 #include <Http/Http.hpp>
 #include <Http/Query.hpp>
+#include <Http/Cookie.hpp>
 
 using namespace std;
 using json = nlohmann::json;
@@ -35,6 +36,7 @@ namespace Http {
         HttpHeaders headers_;
         string body_;
         Query query_;
+        Cookie cookie_;
         
     public:
 
@@ -73,6 +75,13 @@ namespace Http {
          * @return string type of request or empty string if not specified
         */
         string getContentType() noexcept;
+
+        /**
+         * getCookie.
+         * Get cookies associted with this request.
+         * @return Cookie cookies of the request.
+        */
+        Cookie& getCookie() noexcept;
 
         /**
          * getBody.

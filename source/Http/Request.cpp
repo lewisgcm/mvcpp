@@ -27,6 +27,10 @@ namespace Http {
         return query_;
     }
 
+    Cookie& Request::getCookie() noexcept {
+        return cookie_;
+    }
+
     HttpHeaders& Request::getHeaders() noexcept {
         return headers_;
     }
@@ -89,6 +93,10 @@ namespace Http {
                 boost::trim( header[1] );
                 boost::algorithm::to_lower( header[0] );
                 boost::algorithm::to_lower( header[1] );
+                if( header[0] == "cookie" ) {
+                    cookie_ = Cookie( header[1] );
+                    continue;
+                }
                 headers_[ header[0] ] = header[1];
             }
         }

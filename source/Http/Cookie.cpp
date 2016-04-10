@@ -2,6 +2,10 @@
 
 namespace Http {
 
+    Cookie::Cookie() {
+        
+    }
+
     Cookie::Cookie( const string &cookie ) {
         if( !parse( cookie ) ) {
             throw Exception::HttpException( BAD_REQUEST );
@@ -9,7 +13,7 @@ namespace Http {
     }
 
     bool Cookie::has( string key ) {
-        return !( data_.find( key ) == data_.end() );
+        return data_.find( key ) != data_.end();
     }
 
     string Cookie::get( string key ) {
@@ -28,10 +32,6 @@ namespace Http {
 
         vector<string> parts;
         boost::split( parts, cookie, boost::is_any_of(";") );
-
-        if( parts.size() == 0 ) {
-            return false;
-        }
 
         for( int i = 0; i < parts.size(); i++ ) {
             vector<string> key_values;

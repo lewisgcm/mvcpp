@@ -20,6 +20,9 @@ namespace Http {
         bool parse( const string &cookie );
 
     public:
+
+        Cookie();
+
         Cookie( const string &cookie );
 
         bool has( string key );

@@ -41,7 +41,7 @@ namespace Http {
          * Parses the HTTP query from the given string to produce query object.
          * @param[in] query Query string to parse into query object
         */
-        Query( string query );
+        Query( const string &query );
 
         /**
          * getParam.
@@ -95,7 +95,7 @@ namespace Http {
          * This function is used to parse the query string into a query object
          * @param[in] query Query to parse
         */
-        bool parse( string query );
+        bool parse( const string &query );
     };
 
 };

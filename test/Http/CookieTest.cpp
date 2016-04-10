@@ -35,4 +35,6 @@ TEST_F (CookieTest, testInvalidCookieNoBody) {
 TEST_F (CookieTest, testValidCookieSingleEntry) {
     ASSERT_NO_THROW( this->cookie = new Http::Cookie( "name=test" ) );
     ASSERT_STREQ( "test", this->cookie->get( "name" ).c_str() );
+    ASSERT_EQ( true,  this->cookie->has( "name" ) );
+    ASSERT_EQ( false, this->cookie->has( "date" ) );
 }

@@ -8,6 +8,7 @@
 #include <Http/Http.hpp>
 #include <Exception/HttpException.hpp>
 #include <Http/Request.hpp>
+#include <Http/Cookie.hpp>
 
 using namespace std;
 

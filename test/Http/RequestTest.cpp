@@ -113,6 +113,24 @@ TEST_F (RequestTest, testValidBody) {
     ASSERT_STREQ( "12345",       this->request->getBody().c_str() );
 }
 
+TEST_F (RequestTest, testValidBodyCookie) {
+    std::istringstream iss(
+        "POST / HTTP/1.1\r\n"
+        "Content-Length: 5\r\n"
+        "Content-Type: application/json\r\n"
+        "Cookie: name=lewis; couch=true\r\n"
+        "\r\n"
+        "12345"
+    );
+    ASSERT_NO_THROW( this->request = new Http::Request(iss) );
+    Http::HttpHeaders headers = this->request->getHeaders();
+    ASSERT_EQ(    Http::HTTP1_1, this->request->getVersion() );
+    ASSERT_EQ(    Http::POST,    this->request->getMethod() );
+    ASSERT_STREQ( "12345",       this->request->getBody().c_str() );
+    ASSERT_STREQ( "lewis",       this->request->getCookie().get( "name" ).c_str() );
+    ASSERT_STREQ( "true",        this->request->getCookie().get( "couch" ).c_str() );
+}
+
 TEST_F (RequestTest, testLongInvalidBody) {
     std::istringstream iss(
         "POST / HTTP/1.1\r\n"

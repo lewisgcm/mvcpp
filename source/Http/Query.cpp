@@ -7,7 +7,7 @@ namespace Http {
     Query::Query() {
     }
 
-    Query::Query( string query ) {
+    Query::Query( const string &query ) {
         if( !parse( query ) ) {
             throw Exception::HttpException( Http::BAD_REQUEST );
         }
@@ -35,7 +35,7 @@ namespace Http {
         return path_;
     }
 
-    bool Query::parse( string query ) {
+    bool Query::parse( const string &query ) {
 
         size_t p_end = query.find("?");
         path_ = query.substr( 0, p_end );
