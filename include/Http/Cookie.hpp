@@ -29,8 +29,16 @@ namespace Http {
 
         string get( string key );
 
-        template <typename T> T get( string key );
+        template <typename T> T get( string key ) {
+            return boost::lexical_cast<T>( this->get( key ) );
+        }
 
-        template <typename T> void set( string key, T item );
+        template <typename T> void set( string key, T item ) {
+            data_[ key ] = boost::lexical_cast<string>( item );
+        }
+
+        void set( string key, string value );
+
+        friend ostream& operator<<(ostream& os, const Cookie& cookie);
     };
 }

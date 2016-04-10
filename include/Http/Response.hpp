@@ -8,6 +8,7 @@
 #include <iostream>
 #include <Log/Log.hpp>
 #include <Http/Http.hpp>
+#include <Http/Cookie.hpp>
 #include <Exception/Exception.hpp>
 
 using namespace std;
@@ -29,6 +30,7 @@ namespace Http {
         HttpStatus status_;
         bool sent_;
         ostream& out_;
+        Cookie cookie_;
 
         /**
          * send.
@@ -67,6 +69,14 @@ namespace Http {
          * @param[in] headers HttpHeaders to add to response headers.
         */
         void addHeaders( HttpHeaders headers ) noexcept;
+
+        /**
+         * getCookie.
+         * Returns the cookie associated with the response.
+         * Can be used to add cookie values.
+         * @return Cookie cookie off this response
+        */
+        Cookie& getCookie() noexcept;
 
         /**
          * Operator<<.

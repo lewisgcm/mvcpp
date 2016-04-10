@@ -25,12 +25,17 @@ namespace Http {
         status_ = status;
     }
 
+    Cookie& Response::getCookie() noexcept {
+        return cookie_;
+    }
+
     void Response::send() {
         if( !sent_ ) {
             out_ << Http::HttpVersionString.at( version_ ) << " " << status_ << " " << Http::HttpResponseStrings.at( status_ ) << "\r\n";
             for( auto& header : headers_ ) {
                 out_ << header.first << ": " << header.second << "\r\n";
             }
+            out_ << cookie_;
             out_ << "\r\n";
             sent_ = true;
         }

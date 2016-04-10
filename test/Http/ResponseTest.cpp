@@ -64,3 +64,32 @@ TEST_F (ResponseTest, testAddHeaders) {
     );
     ASSERT_STREQ( correct.c_str(), oss.str().c_str() );
 }
+
+TEST_F (ResponseTest, testCookie) {
+    std::ostringstream oss;
+    this->response = new Http::Response( Http::HTTP1_1, {}, oss );
+    this->response->getCookie().set( "name", "lewis" );
+    *this->response << "";
+    
+    std::string correct(
+        "HTTP/1.1 200 Ok\r\n"
+        "Set-Cookie: name=lewis\r\n"
+        "\r\n"
+    );
+    ASSERT_STREQ( correct.c_str(), oss.str().c_str() );
+}
+
+TEST_F (ResponseTest, testCookieMultiple) {
+    std::ostringstream oss;
+    this->response = new Http::Response( Http::HTTP1_1, {}, oss );
+    this->response->getCookie().set( "name", "lewis" );
+    this->response->getCookie().set( "name2", "lewis2" );
+    *this->response << "";
+    
+    std::string correct(
+        "HTTP/1.1 200 Ok\r\n"
+        "Set-Cookie: name=lewis;name2=lewis2\r\n"
+        "\r\n"
+    );
+    ASSERT_STREQ( correct.c_str(), oss.str().c_str() );
+}

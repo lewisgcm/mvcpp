@@ -20,12 +20,22 @@ namespace Http {
         return data_[ key ];
     }
 
-    template <typename T> T Cookie::get( string key ) {
-        return boost::lexical_cast<T>( this->get( key ) );
+    void Cookie::set( string key, string value ) {
+        data_[ key ] = value;
     }
 
-    template <typename T> void Cookie::set( string key, T item ) {
-        data_[ key ] = boost::lexical_cast<string>( item );
+    ostream& operator<<(ostream& os, const Cookie& cookie) {
+        if( cookie.data_.empty() ) {
+            return os;
+        } else {
+            string cookie_str = "Set-Cookie: ";
+            for( auto& cookie_pair : cookie.data_ ) {
+                cookie_str += cookie_pair.first + "=" + cookie_pair.second + ";";
+            }
+            cookie_str.pop_back();
+            cookie_str+="\r\n";
+            return os << cookie_str;
+        }
     }
 
     bool Cookie::parse( const string &cookie ) {
