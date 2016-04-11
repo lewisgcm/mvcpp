@@ -73,7 +73,7 @@ TEST_F (ResponseTest, testCookie) {
     
     std::string correct(
         "HTTP/1.1 200 Ok\r\n"
-        "Set-Cookie: name=lewis\r\n"
+        "set-cookie: name=lewis\r\n"
         "\r\n"
     );
     ASSERT_STREQ( correct.c_str(), oss.str().c_str() );
@@ -88,7 +88,7 @@ TEST_F (ResponseTest, testCookieMultiple) {
     
     std::string correct(
         "HTTP/1.1 200 Ok\r\n"
-        "Set-Cookie: name=lewis;name2=lewis2\r\n"
+        "set-cookie: name=lewis;name2=lewis2\r\n"
         "\r\n"
     );
     ASSERT_STREQ( correct.c_str(), oss.str().c_str() );

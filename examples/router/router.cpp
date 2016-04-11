@@ -43,6 +43,15 @@ int main() {
             }),
             Routing::Route( Http::POST,  "/api/test", []( Http::Request& request, Http::Response& response ) -> void {
                 response << "Testing!!!: IO:" << request.getBody() << "\n";
+            }),
+            Routing::Route( Http::GET,  "/session", []( Http::Request& request, Http::Response& response ) -> void {
+                if( !request.getCookie().has( "mvcppsession" ) ) {
+                    response.getCookie().set( "mvcppsession", "123456789" );
+                    response << "Setting Cookie\n";
+                } else {
+                    response << "Cookie value: " << request.getCookie().get( "mvcppsession" ) << "\n";
+                }
+                response << "Hello World";
             })
         });
 

@@ -28,7 +28,7 @@ namespace Http {
         if( cookie.data_.empty() ) {
             return os;
         } else {
-            string cookie_str = "Set-Cookie: ";
+            string cookie_str = "set-cookie: ";
             for( auto& cookie_pair : cookie.data_ ) {
                 cookie_str += cookie_pair.first + "=" + cookie_pair.second + ";";
             }
