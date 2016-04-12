@@ -13,6 +13,8 @@
 #include <boost/algorithm/string.hpp>
 #include <Log/Log.hpp>
 #include <Exception/HttpException.hpp>
+#include <Helper/StringRef.hpp>
+#include <Helper/StringSplitter.hpp>
 
 using namespace std;
 

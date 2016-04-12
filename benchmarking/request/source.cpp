@@ -13,6 +13,7 @@ int main() {
             "Header: test\r\n"
             "Another: Header\r\n"
             "Header1: This is a very very very very long header that should test the ability to parse the longer strings\r\n"
+            "cookie: name=lewis\r\n"
             "\r\n"
             "And now for the body blah blah this is the body of the request"
         );

@@ -8,18 +8,20 @@
 
 #define ITERATIONS 100000
 
+//3s last route
 int main() {
 
     Routing::Router router({
+        Routing::Route( Http::POST, "/", []( Http::Request& request, Http::Response& response ){} ),//3s
         Routing::Route( Http::GET,  "/api/test/index",       []( Http::Request& request, Http::Response& response ){} ),
         Routing::Route( Http::POST, "/api/test/{id}",        []( Http::Request& request, Http::Response& response ){} ),
-        Routing::Route( Http::POST, "/api/test/{id}/{name}", []( Http::Request& request, Http::Response& response ){} )
+        Routing::Route( Http::POST, "/api/sausage",          []( Http::Request& request, Http::Response& response ){} )//4s
     });
 
     for(int i=0; i< ITERATIONS; i++) {
         ostringstream output;
         istringstream input(
-            "POST /api/test/hello?some=parameters&to=test&parsing=ability&empty&ones=aswell HTTP/1.1\r\n"
+            "POST /?some=parameters&to=test&parsing=ability&empty&ones=aswell HTTP/1.1\r\n"
             "Header: test\r\n"
             "Another: Header\r\n"
             "Header1: This is a very very very very long header that should test the ability to parse the longer strings\r\n"

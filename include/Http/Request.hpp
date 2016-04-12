@@ -17,6 +17,8 @@
 #include <Http/Http.hpp>
 #include <Http/Query.hpp>
 #include <Http/Cookie.hpp>
+#include <Helper/StringRef.hpp>
+#include <Helper/StringSplitter.hpp>
 
 using namespace std;
 using json = nlohmann::json;

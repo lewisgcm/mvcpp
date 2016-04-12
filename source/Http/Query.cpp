@@ -47,14 +47,19 @@ namespace Http {
         if( p_end+1 < query.size() ) {
 
             std::string query_tail = query.substr( p_end+1, string::npos );
-            vector<string> pairs;
-            boost::split( pairs, query_tail, boost::is_any_of("&") );
+            StringSplitter pairs;
+            pairs.split( query_tail, "&" );
+            for( int i = pairs.size(); i >= 0; i-- ) {
+                //StringSplitter parts;
+                //parts.split( pairs.results()[i].c_str(), "=" );
+                //params_[ parts.results()[0].c_str() ] = (parts.size()==2) ? parts.results()[1].c_str() : "";
+            }
 
-            for( string pair : pairs ) {
+            /*for( string pair : pairs ) {
                 vector<string> parts;
                 boost::split( parts, pair, boost::is_any_of("=") );
                 params_[ parts[0] ] = (parts.size()==2) ? parts[1] : "";
-            }
+            }*/
         }
 
         return true;

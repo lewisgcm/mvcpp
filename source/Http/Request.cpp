@@ -53,15 +53,15 @@ namespace Http {
             return false;
         }
 
-        vector<string> tokens;
-        boost::split( tokens, line, boost::is_any_of(" ") );
+        StringSplitter tokens;
+        tokens.split( line, " " );
         if( tokens.size() != 3 ) {
             Log::Warning("Request status line malformed {%s}.", line.c_str() );
             return false;
         }
 
-        auto it_method  = std::find( HttpMethodString.begin(), HttpMethodString.end(), tokens[0] );
-        auto it_version = std::find( HttpVersionString.begin(), HttpVersionString.end(), tokens[2] );
+        auto it_method  = std::find( HttpMethodString.begin(), HttpMethodString.end(), tokens.results()[0].c_str() );
+        auto it_version = std::find( HttpVersionString.begin(), HttpVersionString.end(), tokens.results()[2].c_str() );
 
         if( it_method == HttpMethodString.end() || it_version == HttpVersionString.end() ) {
             Log::Warning("Unknown HTTP method or HTTP version");
@@ -70,7 +70,7 @@ namespace Http {
 
         method_  = (HttpMethod)std::distance( HttpMethodString.begin(), it_method );
         version_ = (HttpVersion)std::distance( HttpVersionString.begin(), it_version );
-        query_   = Query(tokens[1]);
+        query_   = Query(tokens.results()[1].c_str());
 
         while( !stream.eof() ) {
 
@@ -86,18 +86,18 @@ namespace Http {
                 return false;
             }
 
-            vector<string> header;
-            boost::split( header, line, boost::is_any_of(":") );
+            StringSplitter header;
+            header.split( line, ":" );
             if( header.size() == 2 ) {
-                boost::trim( header[0] );
-                boost::trim( header[1] );
-                boost::algorithm::to_lower( header[0] );
-                boost::algorithm::to_lower( header[1] );
-                if( header[0] == "cookie" ) {
-                    cookie_ = Cookie( header[1] );
+                header.results()[ 0 ].trim();
+                header.results()[ 1 ].trim();
+                header.results()[ 0 ].to_lower();
+                header.results()[ 1 ].to_lower();
+                if( strcmp( header.results()[0].c_str(), "cookie" ) == 0 ) {
+                    cookie_ = Cookie( header.results()[1].c_str() );
                     continue;
                 }
-                headers_[ header[0] ] = header[1];
+                headers_[ header.results()[0].c_str() ] = header.results()[1].c_str();
             }
         }
 
