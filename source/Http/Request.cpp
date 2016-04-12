@@ -41,14 +41,11 @@ namespace Http {
 
     bool Request::parse( istream& stream ) {
 
-        string line;
-        getline( stream, line );
+        char line[ Http::MAX_REQUEST_LINE_LENGTH ];
+        stream.getline( line, Http::MAX_REQUEST_LINE_LENGTH, '\r' );
+        int line_size = stream.gcount();
 
-        if( line.size() > 0 ) {
-            line.pop_back();
-        }
-
-        if( line.size() > Http::MAX_REQUEST_LINE_LENGTH ) {
+        if( line_size > Http::MAX_REQUEST_LINE_LENGTH ) {
             Log::Warning("Request exceeds maximum status line length.");
             return false;
         }
@@ -56,7 +53,7 @@ namespace Http {
         StringSplitter tokens;
         tokens.split( line, " " );
         if( tokens.size() != 3 ) {
-            Log::Warning("Request status line malformed {%s}.", line.c_str() );
+            Log::Warning("Request status line malformed {%s}.", line );
             return false;
         }
 
@@ -74,14 +71,15 @@ namespace Http {
 
         while( !stream.eof() ) {
 
-            getline( stream, line );
-            if( line.size() > 1 ) {
-                line.pop_back();
-            } else {
+            memset( line, 0, Http::MAX_REQUEST_LINE_LENGTH );
+            stream.getline( line, Http::MAX_REQUEST_LINE_LENGTH, '\r' );
+            line_size = stream.gcount();
+
+            if( line_size == 0 ) {
                 break;
             }
 
-            if( line.size() > Http::MAX_REQUEST_LINE_LENGTH ) {
+            if( line_size > Http::MAX_REQUEST_LINE_LENGTH ) {
                 Log::Warning("Request exceeds maximum status line length.");
                 return false;
             }

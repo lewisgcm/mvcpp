@@ -5,12 +5,13 @@
         results_ = (StringRef*)malloc( sizeof(StringRef*) * max_size );
     };
 
-    void StringSplitter::split( const string &str, const char *delimiters ) {
+    void StringSplitter::split( char *str, const char *delimiters ) {
         char *saveptr;
         char *token;
 
-        memory_ = (char*)malloc(str.length() + 1);
-        strcpy(memory_, str.c_str());
+        char* memory_ = str;
+        //memory_ = (char*)malloc(str.length() + 1);
+        //strcpy(memory_, str.c_str());
 
         size_ = 0;
         for(token = strtok_r(memory_, delimiters, &saveptr);
@@ -30,5 +31,5 @@
 
     StringSplitter::~StringSplitter() {
         free( results_ );
-        free( memory_ );
+        //free( memory_ );
     }

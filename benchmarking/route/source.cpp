@@ -6,7 +6,7 @@
 #include <Routing/Route.hpp>
 #include <Routing/Router.hpp>
 
-#define ITERATIONS 100000
+#define ITERATIONS 150000
 
 //3s last route
 int main() {

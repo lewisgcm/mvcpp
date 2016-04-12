@@ -16,7 +16,7 @@ public:
 
     StringSplitter( int max_size = 100 );
 
-    void split( const string &str, const char *delimiters );
+    void split( char* str, const char *delimiters );
 
     StringRef* results();
 
