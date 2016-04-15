@@ -6,8 +6,6 @@ set(COVERAGE "FALSE" CACHE STRING "Determines wether or not gcov should be used 
 
 project(mvcpp)
 
-set(CMAKE_C_COMPILER "g++-4.9")
-set(CMAKE_CXX_COMPILER "g++-4.9")
 set(GCC_COVERAGE_COMPILE_FLAGS -fprofile-arcs -ftest-coverage)
 set(GCC_COVERAGE_LINK_FLAGS    "-lgcov -fprofile-arcs")
  
@@ -23,6 +21,8 @@ include_directories(include submodules/json/src ${Boost_INCLUDE_DIRS} )
 
 add_library(mvcpp SHARED ${SOURCES})
 target_include_directories (mvcpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries ( mvcpp LINK_PUBLIC ${Boost_SYSTEM_LIBRARY} )
+target_compile_features( mvcpp PRIVATE cxx_auto_type cxx_lambdas )
 
 if(("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") AND ("${COVERAGE}" STREQUAL "TRUE"))
     message( "-- Compiling mvcpp library with code coverage." ) 

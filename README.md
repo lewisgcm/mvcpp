@@ -9,7 +9,9 @@ Various benchmarks have been included in the `benchmarking/*` directory and
 examples can be viewed in the `examples/*` directory.
 
 ## Getting Started
-Building this project requires cmake 3, boost-system 1.54, google test and a C++11 compiler. 
+Building this project requires cmake 3, boost-system 1.54, google test and a C++11 compiler.
+
+### Linux - debian based
 Dependencies can be installed using the following commands on a debian based Linux system:
 ```bash
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
@@ -17,7 +19,22 @@ sudo apt-get update;
 sudo apt-get install make g++-4.9 libcppunit-dev libboost-system-dev cmake libgtest-dev;
 ```
 
-## Building
+### OSX
+On OSX dependencies can be installed using homebrew:
+```bash
+brew install cmake
+brew install boost
+```
+GoogleTest (gtest) is also required.
+This can be installed using the following commands:
+```bash
+git clone https://github.com/google/googletest.git
+cd googletest; cmake .
+make
+make install
+```
+
+## Building OSX/Ubuntu
 CMake is used as the build system for this project, follow the steps below to compile:
 ```bash
 git clone --recursive https://github.com/lewisgcm/mvcpp
